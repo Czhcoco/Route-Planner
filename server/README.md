@@ -16,7 +16,7 @@ python server.py
 
 ## Query
 
-Query risks of routes from 多伦多 to 北京 on 2020-12-05
+Query risks of routes from 多伦多 to 北京 on 2020-10-25
 
 ```
 http://127.0.0.1:5000/query/多伦多/北京/2020-10-25
