@@ -1,17 +1,19 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
-import Row from "./components/Row";
-import Output from "./components/Output";
+import MainBlock from "./components/MainBlock";
+
+import "bootstrap/dist/css/bootstrap.css";
+// Put any other imports below so that CSS from your
+// components takes precedence over default styles.
+import "./index.css";
 
 ReactDOM.render(
   <React.StrictMode>
     <div>
       <h1>Route Planner</h1>
-      <Row />
-      <Output />
+      <MainBlock />
     </div>
   </React.StrictMode>,
   document.getElementById("root")

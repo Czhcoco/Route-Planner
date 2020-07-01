@@ -4,10 +4,13 @@ import BestRoute from "./BestRoute";
 import OptionalRoute from "./OptionalRoute";
 
 class Output extends Component {
-  state = {};
+  constructor(props) {
+    super(props);
+  }
+
   render() {
     return (
-      <div>
+      <div className="row justify-content-center">
         <Map />
         <BestRoute />
         <OptionalRoute />

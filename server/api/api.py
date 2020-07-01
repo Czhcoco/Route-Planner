@@ -10,7 +10,7 @@ from os import path
 
 file_path = Path(__file__).parent.absolute()
 
-with open(path.join(file_path, 'data', 'data.json')) as json_file:
+with open(path.join(file_path, 'data', 'data.json'), 'rb') as json_file:
     data = json.load(json_file)
 
 new_data = []
@@ -225,7 +225,7 @@ def get_transfer(data):
 
 data_analysis()
 
-with open(path.join(file_path, 'data', 'iata.csv'), newline='') as f:
+with open(path.join(file_path, 'data', 'iata.csv'), 'r', encoding='UTF-8', newline='') as f:
     reader = csv.reader(f)
     next(reader)
     zipped = zip(*reader)

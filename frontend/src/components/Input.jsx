@@ -4,7 +4,7 @@ class Input extends Component {
   state = {};
   render() {
     return (
-      <span class="row">
+      <span className="row">
         <h1>starting point</h1>
         <h1>destination</h1>
       </span>

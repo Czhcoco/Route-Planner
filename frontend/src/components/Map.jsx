@@ -3,7 +3,7 @@ import React, { Component } from "react";
 class Map extends Component {
   state = {};
   render() {
-    return;
+    return <div />;
   }
 }
 
