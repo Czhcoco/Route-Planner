@@ -3,7 +3,7 @@ import React, { Component } from "react";
 class OptionalRoute extends Component {
   state = {};
   render() {
-    return;
+    return <p>Optional Route</p>;
   }
 }
 

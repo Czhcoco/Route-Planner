@@ -3,15 +3,14 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
-import Row from "./components/Row";
-import Output from "./components/Output";
+import "bootstrap/dist/css/bootstrap.css";
+import MainBlock from "./components/MainBlock";
 
 ReactDOM.render(
   <React.StrictMode>
-    <div>
-      <h1>Route Planner</h1>
-      <Row />
-      <Output />
+    <div className="container">
+      <h1 className="row justify-content-center">Route Planner</h1>
+      <MainBlock />
     </div>
   </React.StrictMode>,
   document.getElementById("root")

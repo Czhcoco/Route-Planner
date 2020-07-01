@@ -9,8 +9,10 @@ class Output extends Component {
     return (
       <div>
         <Map />
-        <BestRoute />
-        <OptionalRoute />
+        <span className="row">
+          <BestRoute />
+          <OptionalRoute />
+        </span>
       </div>
     );
   }

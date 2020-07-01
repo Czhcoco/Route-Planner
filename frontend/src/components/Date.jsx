@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 
-class Map extends Component {
+class Date extends Component {
   state = {};
   render() {
-    return <p>Map</p>;
+    return <p>date</p>;
   }
 }
 
-export default Map;
+export default Date;
