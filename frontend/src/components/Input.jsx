@@ -4,9 +4,8 @@ class Input extends Component {
   state = {};
   render() {
     return (
-      <span className="row">
-        <h1>starting point</h1>
-        <h1>destination</h1>
+      <span className="m-2">
+        <p>{this.props.hint}</p>
       </span>
     );
   }

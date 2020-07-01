@@ -12,8 +12,10 @@ class Output extends Component {
     return (
       <div className="row justify-content-center">
         <Map />
-        <BestRoute />
-        <OptionalRoute />
+        <span className="row">
+          <BestRoute />
+          <OptionalRoute />
+        </span>
       </div>
     );
   }
