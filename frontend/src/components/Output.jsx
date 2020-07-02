@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import MapContainer from "./MapContainer";
+import Map from "./Map";
 import Routes from "./Routes";
 
 class Output extends Component {
@@ -18,10 +18,10 @@ class Output extends Component {
   render() {
     return (
       <div className="row align-self-center justify-content-center">
-        <div className="col-12 col-sm-6">
-          <MapContainer route={this.state.bestRoute.stops} date={this.props.date} trans={this.props.trans}/>
+        <div className="col-12 col-sm">
+          <Map route={this.state.bestRoute.stops} date={this.props.date} trans={this.props.trans}/>
         </div>
-        <div className="col-12 col-sm-6">
+        <div className="col-12 col-sm">
           <Routes routes={this.state.routes} />
         </div>
       </div>
