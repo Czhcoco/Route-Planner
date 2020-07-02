@@ -1,9 +1,17 @@
 import React, { Component } from "react";
 
 class Transportation extends Component {
-  state = {};
   render() {
-    return <p>Transportation</p>;
+    const { onChange } = this.props;
+    return (
+      <input
+        type="text"
+        name="Transportation"
+        placeholder="Transportation"
+        className="border-0 shadow-0 form-control m-2"
+        onChange={(e) => onChange(e.target.value)}
+      />
+    );
   }
 }
 

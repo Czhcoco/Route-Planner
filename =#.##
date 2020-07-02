@@ -1,0 +1,11 @@
++ react@16.13.1
++ react-dom@16.13.1
++ moment@2.27.0
++ react-dates@21.8.0
+added 53 packages from 40 contributors and audited 53 packages in 25.245s
+
+20 packages are looking for funding
+  run `npm fund` for details
+
+found 1 low severity vulnerability
+  run `npm audit fix` to fix them, or `npm audit` for details
