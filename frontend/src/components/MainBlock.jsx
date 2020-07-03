@@ -9,6 +9,8 @@ import data from "../City_Country.json";
 import Selector from "./Selector";
 import Button from "@material-ui/core/Button";
 import Alert from "@material-ui/lab/Alert";
+import Paper from "@material-ui/core/Paper";
+import { lightBlue } from "@material-ui/core/colors";
 
 class MainBlock extends Component {
   constructor(props) {
@@ -114,31 +116,47 @@ class MainBlock extends Component {
   render() {
     const cities = data;
     const trans = ["飞机"];
+    const buttonStyles = {
+      height: 50,
+      width: 100,
+      fontSize: "20px",
+      margin: 10,
+      marginLeft: 80,
+    };
+    const dayPickerStyles = {
+      margin: 20,
+      border: 0,
+    };
     return (
       <div>
+        {/* <Paper elevation="3"> */}
         <div className="row">
           <Input hint="出发地" items={cities} onChange={this.changeDeparture} />
           <Input hint="到达地" items={cities} onChange={this.changeArrival} />
           <Input hint="交通工具" items={trans} onChange={this.changeTrans} />
-          <TransportationSelect />
+          {/* <TransportationSelect /> */}
           {/* <DatePicker /> */}
-          <Button
-            onClick={this.fetchOutput}
-            variant="contained"
-            color="primary"
-          >
-            搜 索
-          </Button>
-
-          {/* <Selector /> */}
-
           <DayPickerInput
+            style={dayPickerStyles}
             onDayChange={this.handleDayChange}
             selectedDay={this.state.selectedDay}
             placeholder="日期: YYYY-MM-DD"
             dayPickerProps={{ todayButton: "Today" }}
           />
+          <Button
+            onClick={this.fetchOutput}
+            variant="contained"
+            color="primary"
+            style={buttonStyles}
+          >
+            搜 索
+          </Button>
+
+          {/* <Selector /> */}
         </div>
+        <br />
+        {/* </Paper> */}
+
         {/* <button className="btn btn-primary m-2" onClick={this.fetchOutput}>
           Search
         </button> */}

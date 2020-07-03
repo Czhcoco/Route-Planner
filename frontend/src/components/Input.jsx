@@ -3,6 +3,8 @@ import TextField from "@material-ui/core/TextField";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
+import "bootstrap/dist/css/bootstrap.css";
+import { Paper } from "@material-ui/core";
 
 class Input extends Component {
   constructor(props) {
@@ -37,17 +39,24 @@ class Input extends Component {
     if (suggestions.length === 0) return null;
     else
       return (
-        <List component="nav" aria-label="main mailbox folders">
-          {suggestions.map((item) => (
-            <ListItem
-              onClick={() => this.suggestionSelected(item.city)}
-              key={item.city}
-              button
-            >
-              <ListItemText primary={item.city} secondary={item.country} />
-            </ListItem>
-          ))}
-        </List>
+        <Paper>
+          <div>
+            <List component="nav" aria-label="main mailbox folders">
+              {suggestions.map((item) => (
+                <ListItem
+                  onClick={() => this.suggestionSelected(item.city)}
+                  key={item.city}
+                  button
+                >
+                  <ListItemText
+                    primary={item.city}
+                    secondary={"国家/地区：" + item.country}
+                  />
+                </ListItem>
+              ))}
+            </List>
+          </div>
+        </Paper>
       );
   };
 
