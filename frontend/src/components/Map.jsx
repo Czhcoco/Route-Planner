@@ -1,48 +1,47 @@
 import React from "react"
+import { compose } from "recompose"
 import { withScriptjs, withGoogleMap, GoogleMap, Marker, Polyline } from "react-google-maps"
+
+const myAPI = "AIzaSyBxc4-PLWx3dpX6OHaFY-2iZKl7QalbyhQ";
+const reactAPI = "AIzaSyAyesbQMyKVVbBgKVi2g6VX7mop2z96jBo";
+const API = reactAPI;
+const googleMapURL = "https://maps.googleapis.com/maps/api/js?key=" + API + "&language=cn&region=CN";
 
 class Map extends React.PureComponent {
   constructor(props) {
     super(props);
-    this.state = {
-      positions: [
-        { lat: 60, lng: -100 },
-        { lat: 20, lng: -150 },
-        { lat: -60, lng: 10 }
-      ]
-    }
-    this.mapBoundHandler = this.mapBoundHandler.bind(this);
+
+    console.log(this.props.positions);
+    console.log(this.props.positions[0]);
+    console.log(this.props.positions.length);
+    console.log(this.props.positions.map(item => ({ lat: item.lat, lng: item.lng })));
   }
 
   getInitialCenter() {
     let lat = 0, lng = 0;
-    for (let index = 0; index < this.state.positions.length; index++) {
-      lat += this.state.positions[index].lat;
-      lng += this.state.positions[index].lng;
+    console.log(this.props.positions.length);
+    for (let index = 0; index < this.props.positions.length; index++) {
+      lat += this.props.positions[index].lat;
+      lng += this.props.positions[index].lng;
     }
-    lat /= this.state.positions.length;
-    lng /= this.state.positions.length;
+    lat /= this.props.positions.length;
+    lng /= this.props.positions.length;
+    console.log(lat);
 
     return ({
-      lat: lat,
-      lng: lng
+      lat: parseFloat(lat),
+      lng: parseFloat(lng)
     })
   }
 
   mapBoundHandler(map) {
     let bounds = new window.google.maps.LatLngBounds();
-    for (let index = 0; index < this.state.positions.length; index++) {
-      bounds.extend(this.state.positions[index])
+    for (let index = 0; index < this.props.positions.length; index++) {
+      bounds.extend(this.props.positions[index])
     }
-    map.fitBounds(bounds);
   }
 
   render() {
-    const { compose } = require("recompose");
-
-    // const myAPI = "AIzaSyBxc4-PLWx3dpX6OHaFY-2iZKl7QalbyhQ";
-    const reactAPI = "AIzaSyAyesbQMyKVVbBgKVi2g6VX7mop2z96jBo";
-    const googleMapURL = "https://maps.googleapis.com/maps/api/js?key=" + reactAPI + "&language=cn&region=CN";
 
     const MyMap = compose(
       withScriptjs,
@@ -55,13 +54,11 @@ class Map extends React.PureComponent {
         defaultZoom={5}
         defaultCenter={this.getInitialCenter()}
       >
-        {this.state.positions.map(
-          ({ lat, lng }) => {
-            return <Marker position={{ lat: lat, lng: lng }} />;
-          }
+        {this.props.positions.map(
+          obj => (<Marker position={{ lat: obj.lat, lng: obj.lng }} />)
         )}
         <Polyline
-          path={this.state.positions}
+          path={this.props.positions}
           strokeColor="#00CCFF"
           strokeOpacity={0.8}
           strokeWeight={2}
