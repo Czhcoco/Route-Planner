@@ -18,7 +18,7 @@ class Input extends Component {
     let suggestions = [];
     if (value.length > 0) {
       const regex = new RegExp(`^${value}`, "i");
-      suggestions = this.props.items.filter((v) => regex.test(v));
+      suggestions = this.props.items.filter((v) => regex.test(v.city));
     }
     this.setState({ suggestions, text: value });
     this.props.onChange(value);
@@ -40,11 +40,11 @@ class Input extends Component {
         <List component="nav" aria-label="main mailbox folders">
           {suggestions.map((item) => (
             <ListItem
-              onClick={() => this.suggestionSelected(item)}
-              key={item}
+              onClick={() => this.suggestionSelected(item.city)}
+              key={item.city}
               button
             >
-              <ListItemText primary={item} />
+              <ListItemText primary={item.city} secondary={item.country} />
             </ListItem>
           ))}
         </List>
@@ -52,7 +52,7 @@ class Input extends Component {
   };
 
   render() {
-    const { hint, onChange } = this.props;
+    const { hint } = this.props;
     const { text } = this.state;
     return (
       <span className="m-2">
@@ -63,7 +63,6 @@ class Input extends Component {
           type="search"
           variant="outlined"
           onChange={this.onTextChanged}
-          //   onChange={(e) => onChange(e.target.value)}
         />
         {this.renderSuggestions()}
       </span>

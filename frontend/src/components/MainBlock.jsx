@@ -3,6 +3,10 @@ import Input from "./Input";
 import Output from "./Output";
 import DayPickerInput from "react-day-picker/DayPickerInput";
 import "react-day-picker/lib/style.css";
+import TransportationSelect from "./TransportationSelect";
+import DatePicker from "./DatePicker";
+import data from "../City_Country.json";
+import Selector from "./Selector";
 
 class MainBlock extends Component {
   constructor(props) {
@@ -56,6 +60,7 @@ class MainBlock extends Component {
 
   componentDidMount() {
     console.log("MainBlock Mounted");
+    console.log(data);
   }
 
   componentDidUpdate() {
@@ -64,11 +69,7 @@ class MainBlock extends Component {
 
   fetchOutput() {
     const { input, selectedDay } = this.state;
-    if (
-      input.departure === "多伦多" &&
-      input.arrival === "北京" &&
-      selectedDay
-    ) {
+    if (input.departure && input.arrival && selectedDay) {
       const dateString = JSON.stringify(selectedDay).slice(1, 11);
       console.log("fetchOutput");
       fetch(
@@ -76,13 +77,21 @@ class MainBlock extends Component {
       )
         // .then((res) => res.text())
         // .then((text) => console.log(text));
-        .then((response) => response.json())
-        .then((output) => this.setState({ output: output }));
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(response.statusText);
+          }
+          return response.json();
+        })
+        .then((output) => this.setState({ output: output }))
+        .catch((err) => {
+          console.log(err);
+        });
     }
   }
 
   render() {
-    const cities = ["北京", "北极", "多伦多", "上海", "上"];
+    const cities = data;
     const trans = ["飞机"];
     return (
       <div>
@@ -90,6 +99,9 @@ class MainBlock extends Component {
           <Input hint="出发地" items={cities} onChange={this.changeDeparture} />
           <Input hint="到达地" items={cities} onChange={this.changeArrival} />
           <Input hint="交通工具" items={trans} onChange={this.changeTrans} />
+          <TransportationSelect />
+          {/* <DatePicker /> */}
+          <Selector />
 
           <DayPickerInput
             onDayChange={this.handleDayChange}
