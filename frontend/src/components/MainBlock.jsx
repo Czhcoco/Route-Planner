@@ -120,41 +120,52 @@ class MainBlock extends Component {
       height: 50,
       width: 100,
       fontSize: "20px",
-      margin: 10,
-      marginLeft: 80,
     };
     const dayPickerStyles = {
-      margin: 20,
-      border: 0,
+      margin: 10,
     };
     return (
       <div>
         {/* <Paper elevation="3"> */}
-        <div className="row">
-          <Input hint="出发地" items={cities} onChange={this.changeDeparture} />
-          <Input hint="到达地" items={cities} onChange={this.changeArrival} />
-          <Input hint="交通工具" items={trans} onChange={this.changeTrans} />
+        <div className="row align-items-top">
+          <div className="col-sm">
+            <Input
+              hint="出发地"
+              items={cities}
+              onChange={this.changeDeparture}
+            />
+          </div>
+          <div className="col-sm">
+            <Input hint="到达地" items={cities} onChange={this.changeArrival} />
+          </div>
+          <div className="col-sm">
+            <Input hint="交通工具" items={trans} onChange={this.changeTrans} />
+          </div>
           {/* <TransportationSelect /> */}
           {/* <DatePicker /> */}
-          <DayPickerInput
-            style={dayPickerStyles}
-            onDayChange={this.handleDayChange}
-            selectedDay={this.state.selectedDay}
-            placeholder="日期: YYYY-MM-DD"
-            dayPickerProps={{ todayButton: "Today" }}
-          />
-          <Button
-            onClick={this.fetchOutput}
-            variant="contained"
-            color="primary"
-            style={buttonStyles}
-          >
-            搜 索
-          </Button>
+          <div className="col-sm">
+            <DayPickerInput
+              style={dayPickerStyles}
+              onDayChange={this.handleDayChange}
+              selectedDay={this.state.selectedDay}
+              placeholder="日期: YYYY-MM-DD"
+              dayPickerProps={{ todayButton: "Today" }}
+            />
+          </div>
+          <div className="col-sm">
+            <Button
+              onClick={this.fetchOutput}
+              variant="contained"
+              color="primary"
+              style={buttonStyles}
+            >
+              搜 索
+            </Button>
+          </div>
 
           {/* <Selector /> */}
         </div>
-        <br />
+
         {/* </Paper> */}
 
         {/* <button className="btn btn-primary m-2" onClick={this.fetchOutput}>
