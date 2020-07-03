@@ -3,7 +3,7 @@ import Geocode from "react-geocode";
 import Map from "./Map";
 import Route from "./Route";
 
-const API = "AIzaSyBxc4PLWx3dpX6OHaFY-2iZKl7QalbyhQ";
+const API = "AIzaSyBxc4-PLWx3dpX6OHaFY-2iZKl7QalbyhQ";
 // set Google Maps Geocoding API for purposes of quota management. Its optional but recommended.
 Geocode.setApiKey(API);
 
@@ -21,6 +21,7 @@ class Output extends Component {
     this.state = {
       bestMenu: true,
       optionalMenu: false,
+      routes: [],
       routeIndex: 0
     };
 
@@ -30,7 +31,7 @@ class Output extends Component {
 
   selectRoute(index) {
     this.setState({
-      routeIndex: index
+      routeIndex: index + 1
     });
   }
 
@@ -43,40 +44,56 @@ class Output extends Component {
     this.setState({ optionalMenu: !this.state.optionalMenu })
   }
 
-  render() {
-    const showBest = (this.state.bestMenu) ? "show" : "";
-    const showOptional = (this.state.optionalMenu) ? "show" : "";
-    
+  getRoutes() {
+    console.log("get routes");
+
     let routes = this.props.output.sort(
       (a, b) => a.risk > b.risk ? 1 : a.risk < b.risk ? -1 : a.stops.length - b.stops.length
     );
-    routes = routes.map(route => {
-      let positions = new Array();
-      route.stops.forEach(stop => {
-        Geocode.fromAddress(stop).then(
+
+    const routesPromises = routes.map(route => {
+      const positionPromises = route.stops.map(stop => {
+        return Geocode.fromAddress(stop).then(
           response => {
             const { lat, lng } = response.results[0].geometry.location;
-            positions.push({ lat: lat, lng: lng });
+            return ({ lat: lat, lng: lng });
           },
           error => {
             console.error(error);
           }
         );
       });
-      return {
-        risk: route.risk,
-        stops: route.stops,
-        positions: positions
-      };
+      return Promise.all(positionPromises);
+    });
+
+    Promise.all(routesPromises).then(positions => {
+      const newRoutes = positions.map((pos, index) =>
+        ({
+          ...routes[index],
+          positions: pos
+        })
+      );
+      this.setState({ routes: newRoutes });
     })
+  }
+
+  componentDidMount() {
+    this.getRoutes();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.output !== prevProps.output) {
+      this.getRoutes();
+    }
+  }
+
+  render() {
+    const showBest = (this.state.bestMenu) ? "show" : "";
+    const showOptional = (this.state.optionalMenu) ? "show" : "";
 
     return (
       <div className="row align-self-center justify-content-center">
-        <div className="col-12 col-sm">
-          <Map positions={routes[this.state.routeIndex].positions} />
-          <Route route={routes[this.state.routeIndex]} />
-        </div>
-        <div className="col-12 col-sm card bg-muted" style={{ width: '98%', height: '100%', position: 'relative', borderRadius: '10pt' }}>
+        <div className="col-12 col-sm-6 card bg-muted" style={{ width: '98%', height: '98%', position: 'relative', borderRadius: '10pt' }}>
           <div className="card-body row" style={{ fontSize: '18pt', border: 'none' }}>
             <div className="col-sm" align="center">
               途径
@@ -101,9 +118,13 @@ class Output extends Component {
             </svg>
           </button>
 
-          <button className={"card-body btn btn-block bt-muted collapse " + showBest} onClick={() => this.selectRoute(0)} >
-            <Route route={routes[0]} />
-          </button>
+          {
+            this.state.routes.length && (
+              <button className={"card-body btn btn-block bt-muted collapse " + showBest} onClick={() => this.selectRoute(0)} >
+                <Route route={this.state.routes[0]} />
+              </button>
+            )
+          }
 
           <button className="card-header text-info" style={{ fontSize: '18pt', border: 'none' }} align="center"
             onClick={this.toggleOptionalMenu}>
@@ -115,17 +136,30 @@ class Output extends Component {
           </button>
 
           <span id="optional" className={"card-body collapse " + showOptional}>
-            {routes.slice(1).map(route => {
-              return (
-                <button className="btn btn-block bt-muted" onClick={() => this.selectRoute(routes.findIndex(item => (item == route)))} >
-                  <Route route={route} />
-                </button>
-              );
+            {
+              this.state.routes.length && this.state.routes.slice(1).map((route, index) => {
+                return (
+                  <button className="btn btn-block bt-muted" onClick={() => this.selectRoute(index)} key={index}>
+                    <Route route={route} />
+                  </button>
+                );
+              })
             }
-            )}
           </span>
-
         </div>
+
+        {
+          this.state.routes.length &&
+          (
+            <div className={"col-12 col-sm-6 "} style={{ height: '400px', margin: '5' }}>
+              <span className={"card bg-muted "} style={{ width: '98%', position: 'relative', borderRadius: '10pt' }}>
+                <p style={{ fontSize: '16pt', border: 'none' }} className={"card-header text-info"}>地图上显示的路径：</p>
+                <Route className={"row card-body "} route={this.state.routes[this.state.routeIndex]} />
+              </span>
+              <Map positions={this.state.routes[this.state.routeIndex].positions} />
+            </div>
+          )
+        }
       </div >
     );
   }

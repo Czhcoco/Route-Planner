@@ -8,7 +8,7 @@ class Route extends Component {
     }
 
     return (
-      <div className="row justify-content-center">
+      <div className={(this.props.className) ? this.props.className : "row justify-content-center"}>
         <div className="col-sm" align="center">
           {route.stops}
         </div>
