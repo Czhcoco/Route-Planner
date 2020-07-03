@@ -1,21 +1,18 @@
 import React, { Component } from "react";
 import Input from "./Input";
-import Transportation from "./Transportation";
 import Output from "./Output";
 import DayPickerInput from "react-day-picker/DayPickerInput";
 import "react-day-picker/lib/style.css";
-import Autocomplete from "react-autocomplete/dist/react-autocomplete.js";
 
 class MainBlock extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      //   value: "",
       input: {
         departure: "",
         arrival: "",
         // date: "",
-        trans: "flight",
+        trans: "飞机",
       },
       output: [],
     };
@@ -67,9 +64,12 @@ class MainBlock extends Component {
 
   fetchOutput() {
     const { input, selectedDay } = this.state;
-    const dateString = JSON.stringify(selectedDay).slice(1, 11);
-    console.log(dateString);
-    if (input.departure === "多伦多" && input.arrival === "北京") {
+    if (
+      input.departure === "多伦多" &&
+      input.arrival === "北京" &&
+      selectedDay
+    ) {
+      const dateString = JSON.stringify(selectedDay).slice(1, 11);
       console.log("fetchOutput");
       fetch(
         "/query/" + input.departure + "/" + input.arrival + "/" + dateString
@@ -82,25 +82,14 @@ class MainBlock extends Component {
   }
 
   render() {
+    const cities = ["北京", "北极", "多伦多", "上海", "上"];
+    const trans = ["飞机"];
     return (
       <div>
-        <div className="row">
-          {/* <Autocomplete
-            getItemValue={(item) => item.label}
-            items={[{ label: "北京" }, { label: "北" }, { label: "多伦多" }]}
-            renderItem={(item, isHighlighted) => (
-              <div
-                style={{ background: isHighlighted ? "lightgray" : "white" }}
-              >
-                {item.label}
-              </div>
-            )}
-            value={this.state.value}
-            onChange={(e) => this.setState({ value: e.target.value })}
-            onSelect={(val) => this.setState({ value: val })}
-          /> */}
-          <Input hint="Departure" onChange={this.changeDeparture} />
-          <Input hint="Arrival" onChange={this.changeArrival} />
+        <span className="row">
+          <Input hint="出发地" items={cities} onChange={this.changeDeparture} />
+          <Input hint="到达地" items={cities} onChange={this.changeArrival} />
+          <Input hint="交通工具" items={trans} onChange={this.changeTrans} />
 
           <DayPickerInput
             onDayChange={this.handleDayChange}
@@ -108,12 +97,10 @@ class MainBlock extends Component {
             placeholder="日期: YYYY-MM-DD"
             dayPickerProps={{ todayButton: "Today" }}
           />
-
-          <Transportation onChange={this.changeTrans} />
-          <button className="btn btn-primary m-2" onClick={this.fetchOutput}>
-            Search
-          </button>
-        </div>
+        </span>
+        <button className="btn btn-primary m-2" onClick={this.fetchOutput}>
+          Search
+        </button>
         <Output output={this.state.output} trans={this.state.input.trans} />
       </div>
     );
