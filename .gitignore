@@ -138,4 +138,9 @@ dmypy.json
 cython_debug/
 
 .DS_Store
+<<<<<<< HEAD
 node_modules
+=======
+
+**/.vscode/
+>>>>>>> a2aa2aeb74f72d6d702a9d1ad368c4f0cfe789aa
