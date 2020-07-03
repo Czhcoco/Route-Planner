@@ -7,6 +7,8 @@ import TransportationSelect from "./TransportationSelect";
 import DatePicker from "./DatePicker";
 import data from "../City_Country.json";
 import Selector from "./Selector";
+import Button from "@material-ui/core/Button";
+import Alert from "@material-ui/lab/Alert";
 
 class MainBlock extends Component {
   constructor(props) {
@@ -29,6 +31,7 @@ class MainBlock extends Component {
     input.departure = value;
     this.setState({
       input,
+      error: false,
     });
   };
 
@@ -37,6 +40,7 @@ class MainBlock extends Component {
     input.arrival = value;
     this.setState({
       input,
+      error: false,
     });
   };
 
@@ -47,6 +51,7 @@ class MainBlock extends Component {
       isEmpty: !input.value.trim(),
       isValidDay: typeof selectedDay !== "undefined",
       isDisabled: modifiers.disabled === true,
+      error: false,
     });
   }
 
@@ -55,6 +60,7 @@ class MainBlock extends Component {
     input.trans = "飞机";
     this.setState({
       input,
+      error: false,
     });
   };
 
@@ -86,7 +92,22 @@ class MainBlock extends Component {
         .then((output) => this.setState({ output: output }))
         .catch((err) => {
           console.log(err);
+          this.setState({ error: true });
         });
+    }
+  }
+
+  handleFetchError() {
+    if (this.state.error) {
+      return (
+        <div>
+          <br />
+          <br />
+          <Alert variant="filled" severity="info" className="m-2">
+            抱歉！没有找到匹配路线，请更改选项后重新搜索！
+          </Alert>
+        </div>
+      );
     }
   }
 
@@ -95,13 +116,21 @@ class MainBlock extends Component {
     const trans = ["飞机"];
     return (
       <div>
-        <span className="row">
+        <div className="row">
           <Input hint="出发地" items={cities} onChange={this.changeDeparture} />
           <Input hint="到达地" items={cities} onChange={this.changeArrival} />
           <Input hint="交通工具" items={trans} onChange={this.changeTrans} />
           <TransportationSelect />
           {/* <DatePicker /> */}
-          <Selector />
+          <Button
+            onClick={this.fetchOutput}
+            variant="contained"
+            color="primary"
+          >
+            搜 索
+          </Button>
+
+          {/* <Selector /> */}
 
           <DayPickerInput
             onDayChange={this.handleDayChange}
@@ -109,10 +138,11 @@ class MainBlock extends Component {
             placeholder="日期: YYYY-MM-DD"
             dayPickerProps={{ todayButton: "Today" }}
           />
-        </span>
-        <button className="btn btn-primary m-2" onClick={this.fetchOutput}>
+        </div>
+        {/* <button className="btn btn-primary m-2" onClick={this.fetchOutput}>
           Search
-        </button>
+        </button> */}
+        {this.handleFetchError()}
         <Output output={this.state.output} trans={this.state.input.trans} />
       </div>
     );
