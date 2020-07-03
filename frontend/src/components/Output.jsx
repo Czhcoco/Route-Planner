@@ -19,7 +19,7 @@ class Output extends Component {
     return (
       <div className="row align-self-center justify-content-center">
         <div className="col-12 col-sm">
-          <Map route={this.state.bestRoute.stops} date={this.props.date} trans={this.props.trans}/>
+          <Map route={this.state.bestRoute.stops} />
         </div>
         <div className="col-12 col-sm">
           <Routes routes={this.state.routes} />

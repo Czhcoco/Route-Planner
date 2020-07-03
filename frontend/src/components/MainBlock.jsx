@@ -113,7 +113,7 @@ class MainBlock extends Component {
           <Transportation onChange={this.changeTrans} />
           <button onClick={this.handleClick}>Search</button>
         </div>
-        <Output output={this.state.output} date={this.state.input.date} trans={this.state.input.trans} />
+        <Output output={this.state.output} />
       </div>
     );
   }
