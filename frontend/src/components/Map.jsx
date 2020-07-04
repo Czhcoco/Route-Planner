@@ -1,4 +1,5 @@
 import React from "react"
+import Alert from "@material-ui/lab/Alert";
 import { compose } from "recompose"
 import { withScriptjs, withGoogleMap, GoogleMap, Marker, Polyline } from "react-google-maps"
 
@@ -7,9 +8,34 @@ const API = myAPI;
 const googleMapURL = "https://maps.googleapis.com/maps/api/js?key=" + API + "&language=cn&region=CN";
 
 class Map extends React.PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = {
+      error: null,
+      errorInfo: null
+    };
+    console.log(this.props.positions);
+  }
+
+  componentDidCatch(error, errorInfo) {
+    // Catch errors in any components below and re-render with error message
+    this.setState({
+      error: error,
+      errorInfo: errorInfo
+    })
+    // You can also log error messages to an error reporting service here
+  }
+
   getInitialCenter() {
     let lat = 0, lng = 0;
-    console.log(this.props.positions.length);
+
+    if (this.props.positions.length === 0 || this.props.positions[0] == undefined) {
+      return ({
+        lat: parseFloat(lat),
+        lng: parseFloat(lng)
+      })
+    }
+
     for (let index = 0; index < this.props.positions.length; index++) {
       lat += this.props.positions[index].lat;
       lng += this.props.positions[index].lng;
@@ -33,6 +59,17 @@ class Map extends React.PureComponent {
   }
 
   render() {
+    console.log("map rendering")
+
+    if (this.state.errorInfo
+      || this.props.positions.length === 0
+      || this.props.positions[0] == undefined) {
+      return (
+        <Alert variant="filled" severity="error" className="m-2">
+          抱歉！加载Google地图失败！
+        </Alert>
+      );
+    }
 
     const MyMap = compose(
       withScriptjs,
@@ -46,7 +83,7 @@ class Map extends React.PureComponent {
         defaultCenter={this.getInitialCenter()}
       >
         {this.props.positions.map(
-          (obj, index) => (<Marker position={{ lat: obj.lat, lng: obj.lng }} key={index} />)
+          (obj, index) => obj && (<Marker position={{ lat: obj.lat, lng: obj.lng }} key={index} />)
         )}
         <Polyline
           path={this.props.positions}
@@ -59,9 +96,10 @@ class Map extends React.PureComponent {
 
     return <MyMap
       googleMapURL={googleMapURL}
-      loadingElement={<div style={{ height: '100%' }} />}
-      containerElement={<div style={{ height: '100%' }} />}
-      mapElement={<div
+      loadingElement={<div style={{ height: '100%' }
+      } />}
+      containerElement={< div style={{ height: '100%' }} />}
+      mapElement={< div
         style={{
           height: '98%',
           positions: 'relative',

@@ -8,8 +8,16 @@ import App from "./App";
 
 ReactDOM.render(
   <React.StrictMode>
-    <div className="container">
-      <h1 className="row justify-content-center p-20">Route Planner</h1>
+    <header className="row align-items-center justify-content-center">
+      <div className="col-auto">
+        <br />
+        <br />
+        <h1>Route Planner</h1>
+        <br />
+        <br />
+      </div>
+    </header>
+    <div className="container h-100 d-flex justify-content-center">
       <MainBlock />
     </div>
   </React.StrictMode>,
