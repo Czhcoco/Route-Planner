@@ -170,7 +170,7 @@ class Output extends Component {
               className={
                 "card-body btn btn-block bt-muted collapse " + showBest
               }
-              onClick={() => this.selectRoute(0)}
+              onClick={() => this.selectRoute(-1)}
             >
               <Route route={this.state.routes[0]} />
             </button>
@@ -242,6 +242,7 @@ class Output extends Component {
                 route={this.state.routes[this.state.routeIndex]}
               />
             </span>
+            <br />
             <Map
               positions={this.state.routes[this.state.routeIndex].positions}
             />

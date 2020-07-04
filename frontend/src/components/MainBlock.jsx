@@ -107,8 +107,6 @@ class MainBlock extends Component {
     if (this.state.error) {
       return (
         <div>
-          <br />
-          <br />
           <Alert variant="filled" severity="info" className="m-2">
             抱歉！没有找到匹配路线，请更改选项后重新搜索！
           </Alert>
@@ -133,7 +131,9 @@ class MainBlock extends Component {
       fontSize: "20px",
     };
     const dayPickerStyles = {
+      height: 50,
       margin: 10,
+
     };
     return (
       <div>
@@ -182,6 +182,8 @@ class MainBlock extends Component {
         {/* <button className="btn btn-primary m-2" onClick={this.fetchOutput}>
           Search
         </button> */}
+        <br />
+        <br />
         {this.handleFetchError()}
         {this.handleOutput()}
       </div>
