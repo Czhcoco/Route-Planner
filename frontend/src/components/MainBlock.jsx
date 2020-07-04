@@ -22,40 +22,7 @@ class MainBlock extends Component {
         // date: "",
         trans: "飞机",
       },
-      output: [
-        {
-          risk: 0,
-          stops: ["多伦多", "北京"],
-        },
-        {
-          risk: 159,
-          stops: ["多伦多", "纽约", "北京"],
-        },
-        {
-          risk: 0,
-          stops: ["多伦多", "华盛顿", "北京"],
-        },
-        {
-          risk: 0,
-          stops: ["多伦多", "底特律", "北京"],
-        },
-        {
-          risk: 0,
-          stops: ["多伦多", "芝加哥", "北京"],
-        },
-        {
-          risk: 0,
-          stops: ["多伦多", "漢城", "北京"],
-        },
-        {
-          risk: 34,
-          stops: ["多伦多", "温哥华", "北京"],
-        },
-        {
-          risk: 48,
-          stops: ["多伦多", "东京", "北京"],
-        },
-      ],
+      output: [],
     };
     this.fetchOutput = this.fetchOutput.bind(this);
     this.handleDayChange = this.handleDayChange.bind(this);
@@ -67,6 +34,7 @@ class MainBlock extends Component {
     this.setState({
       input,
       error: false,
+      output: [],
     });
   };
 
@@ -76,6 +44,7 @@ class MainBlock extends Component {
     this.setState({
       input,
       error: false,
+      output: [],
     });
   };
 
@@ -87,6 +56,7 @@ class MainBlock extends Component {
       isValidDay: typeof selectedDay !== "undefined",
       isDisabled: modifiers.disabled === true,
       error: false,
+      output: [],
     });
   }
 
@@ -96,6 +66,7 @@ class MainBlock extends Component {
     this.setState({
       input,
       error: false,
+      output: [],
     });
   };
 
@@ -144,6 +115,13 @@ class MainBlock extends Component {
         </div>
       );
     }
+  }
+
+  handleOutput() {
+    if (this.state.output.length > 0)
+      return (
+        <Output output={this.state.output} trans={this.state.input.trans} />
+      );
   }
 
   render() {
@@ -205,7 +183,7 @@ class MainBlock extends Component {
           Search
         </button> */}
         {this.handleFetchError()}
-        <Output output={this.state.output} trans={this.state.input.trans} />
+        {this.handleOutput()}
       </div>
     );
   }
