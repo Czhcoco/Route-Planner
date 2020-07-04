@@ -163,22 +163,21 @@ class MainBlock extends Component {
             position: "relative",
           }}
         >
-          <div className="col-sm">
+          <div className="col-md-4">
             <ComboBox
               classes={{ width: "1px" }}
               hint="起点"
               items={cities}
               onChange={this.changeDeparture}
             />
-          </div>
-          <div className="col-sm">
+            <br />
             <ComboBox
               hint="终点"
               items={cities}
               onChange={this.changeArrival}
             />
           </div>
-          <div className="col-sm">
+          <div className="col-md-2">
             <Selector
               hint="交通工具"
               items={trans}
@@ -186,11 +185,11 @@ class MainBlock extends Component {
             />
           </div>
 
-          <div className="col-sm">
+          <div className="col-md-4">
             <MaterialUIPickers onChange={this.handleDayChange} />
           </div>
 
-          <div className="col-12 col-sm-2 align-items-center justify-content-center">
+          <div className="col-md-2 align-items-center justify-content-center">
             <Button
               onClick={this.fetchOutput}
               variant="outlined"
