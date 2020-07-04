@@ -125,7 +125,7 @@ class MainBlock extends Component {
     } else {
       return (
         <div>
-          <p>注意事项</p>
+          <p>使用说明</p>
         </div>
       );
     }
@@ -147,7 +147,7 @@ class MainBlock extends Component {
           border: 'none',
           borderRadius: '10pt',
           backgroundColor: 'rgb(255, 255, 255, 0.88)',
-          width: '80%',
+          width: '88%',
           position: 'absolute', left: '50%', top: '50%',
           transform: 'translate(-50%, -50%)'
         }}>
@@ -156,9 +156,7 @@ class MainBlock extends Component {
           style={{
             backgroundColor: 'rgb(255, 255, 255, 0)',
           }}>
-          <div className="col-auto">
-            <h1>$afe Route Planner</h1>
-          </div>
+          <h1 style={{ textAlign: 'center' }} >$afe Route Planner</h1>
         </header>
 
         <div className="row align-items-center justify-content-center"

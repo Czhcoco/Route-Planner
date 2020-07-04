@@ -5,6 +5,14 @@ import "bootstrap/dist/css/bootstrap.css";
 import MainBlock from "./components/MainBlock";
 import "../src/index.css";
 import GoogleFontLoader from 'react-google-font-loader';
+import { ThemeProvider } from '@material-ui/styles';
+import { createMuiTheme } from '@material-ui/core/styles';
+
+const THEME = createMuiTheme({
+  typography: {
+    "fontFamily": 'Rajdhani, Noto Serif SC'
+  }
+});
 
 ReactDOM.render(
   <React.StrictMode>
@@ -20,12 +28,14 @@ ReactDOM.render(
         },
       ]}
     />
-    <div className="container h-100 d-flex justify-content-center"
-      style={{
-        fontFamily: 'Rajdhani, Noto Serif SC',
-      }}>
-      <MainBlock />
-    </div>
+    <ThemeProvider theme={THEME}>
+      <div className="container h-100 d-flex justify-content-center"
+        style={{
+          fontFamily: 'Rajdhani, Noto Serif SC',
+        }}>
+        <MainBlock />
+      </div>
+    </ThemeProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );
