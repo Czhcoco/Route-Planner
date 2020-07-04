@@ -5,6 +5,8 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import "bootstrap/dist/css/bootstrap.css";
 import { Paper } from "@material-ui/core";
+import ScrollView from "react-native-scroll-view";
+import { Animated, Text, View, StyleSheet, Button } from "react-native";
 
 class Input extends Component {
   constructor(props) {
@@ -41,20 +43,22 @@ class Input extends Component {
       return (
         <Paper>
           <div>
-            <List component="nav" aria-label="main mailbox folders">
-              {suggestions.map((item) => (
-                <ListItem
-                  onClick={() => this.suggestionSelected(item.city)}
-                  key={item.city}
-                  button
-                >
-                  <ListItemText
-                    primary={item.city}
-                    secondary={"国家/地区：" + item.country}
-                  />
-                </ListItem>
-              ))}
-            </List>
+            <ScrollView>
+              <List component="nav" aria-label="main mailbox folders">
+                {suggestions.map((item) => (
+                  <ListItem
+                    onClick={() => this.suggestionSelected(item.city)}
+                    key={item.city}
+                    button
+                  >
+                    <ListItemText
+                      primary={item.city}
+                      secondary={"国家/地区：" + item.country}
+                    />
+                  </ListItem>
+                ))}
+              </List>
+            </ScrollView>
           </div>
         </Paper>
       );
