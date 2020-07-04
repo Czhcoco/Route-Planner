@@ -6,12 +6,15 @@ import Selector from "./Selector";
 import Button from "@material-ui/core/Button";
 import Alert from "@material-ui/lab/Alert";
 import ComboBox from "./ComboBox";
+import useWindowDimensions from "./useWindowDimensions";
 
 class MainBlock extends Component {
   constructor(props) {
     super(props);
     this.state = {
       statement: false,
+      cardheight: 0,
+      top: '50%',
       input: {
         departure: "",
         arrival: "",
@@ -22,6 +25,20 @@ class MainBlock extends Component {
     };
     this.fetchOutput = this.fetchOutput.bind(this);
     this.handleDayChange = this.handleDayChange.bind(this);
+  }
+
+  setCardPosition() {
+    const { height } = useWindowDimensions();
+    if (this.state.cardheight > height) {
+      const percent = String(this.state.cardheight / height * 50) + "%";
+      this.setState({
+        top: percent
+      })
+    } else {
+      this.setState({
+        top: "50%"
+      })
+    }
   }
 
   changeDeparture = (values) => {
@@ -78,11 +95,20 @@ class MainBlock extends Component {
 
   componentDidMount() {
     console.log("MainBlock Mounted");
-    console.log(data);
+    this.setState({
+      cardheight: document.getElementById('card').clientHeight
+    });
+    this.setCardPosition();
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps, prevState) {
     console.log("MainBlock Updated");
+    this.setState({
+      cardheight: document.getElementById('card').clientHeight
+    });
+    if (this.state.cardheight !== prevState.cardheight) {
+      this.setCardPosition();
+    }
   }
 
   fetchOutput() {
@@ -140,16 +166,17 @@ class MainBlock extends Component {
           </button>
           <div className={"card-body collapse " + (this.state.statement ? "show" : "")}>
             <ol textAlign={'left'}>
-            <li>交通工具目前只提供“飞机”选项</li>
-            <li>起点和终点的选项括号内均为所属国家/地区</li>
-            <li>
-              本搜索工具使用的风险系数计算公式为：各路线风险系数 =
-              航班风险系数*飞行时长 + 转机过程风险系数*转机时长*0.5
-            </li>
+              <li>
+                交通工具目前只提供“飞机”选项
+              </li>
+              <li>
+                起点和终点的选项括号内均为所属国家/地区
+              </li>
+              <li>
+                本搜索工具使用的风险系数计算公式为（仅供参考）：各路线风险系数 =
+                航班风险系数*飞行时长 + 转机过程风险系数*转机时长*0.5
+              </li>
             </ol>
-          </div>
-          <div className="card-header" height={'100px'} fontSize={'12pt'} textAlign={'left'}>
-            footer
           </div>
         </div>
       );
@@ -167,6 +194,7 @@ class MainBlock extends Component {
 
     return (
       <div
+        id="card"
         className="card vertical-center-row align-items-center justify-content-center"
         style={{
           border: 'none',
@@ -175,7 +203,7 @@ class MainBlock extends Component {
           width: '88%',
           position: 'absolute',
           left: '50%',
-          top: '50%',
+          top: this.state.top,
           transform: 'translate(-50%, -50%)'
         }}>
 
@@ -236,6 +264,10 @@ class MainBlock extends Component {
         </div>
         {this.handleFetchError()}
         {this.handleOutput()}
+
+        <footer className={'MuiTypography-root MuiTypography-caption MuiTypography-colorTextSecondary MuiTypography-alignCenter'}>
+          Copyright © 2020 Google Girl Hackathon Team - Fire Chicken - CAI Zhihan, LYU Hanfang, NIE Fei
+        </footer>
       </div >
     );
   }
