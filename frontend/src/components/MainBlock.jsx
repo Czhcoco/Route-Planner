@@ -6,6 +6,7 @@ import data from "../City_Country.json";
 import Selector from "./Selector";
 import Button from "@material-ui/core/Button";
 import Alert from "@material-ui/lab/Alert";
+import GoogleFontLoader from 'react-google-font-loader';
 
 class MainBlock extends Component {
   constructor(props) {
@@ -132,6 +133,7 @@ class MainBlock extends Component {
       width: '100%',
       fontSize: "18px",
     };
+
     return (
       <div className="card vertical-center-row align-items-center justify-content-center"
         style={{
@@ -142,7 +144,31 @@ class MainBlock extends Component {
           position: 'absolute', left: '50%', top: '50%',
           transform: 'translate(-50%, -50%)'
         }}>
-        <br />
+
+        <GoogleFontLoader
+          fonts={[
+            {
+              font: 'Rajdhani',
+              weights: [500, '500i'],
+            },
+            {
+              font: 'Roboto Mono',
+              weights: [400, 700],
+            },
+          ]}
+          subsets={['cyrillic-ext', 'greek']}
+        />
+
+        <header className="jumbotron jumbotron-fluid row align-items-center justify-content-center"
+          style={{
+            backgroundColor: 'rgb(255, 255, 255, 0)',
+            fontFamily: 'Rajdhani',
+          }}>
+          <div className="col-auto">
+            <h1>$afe Route Planner</h1>
+          </div>
+        </header>
+
         <div className="row align-items-center justify-content-center"
           style={{
             border: 'none',
