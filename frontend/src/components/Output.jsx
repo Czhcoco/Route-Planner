@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Geocode from "react-geocode";
 import Map from "./Map";
 import Route from "./Route";
+import Alert from "@material-ui/lab/Alert";
 
 const API = "AIzaSyBxc4-PLWx3dpX6OHaFY-2iZKl7QalbyhQ";
 // set Google Maps Geocoding API for purposes of quota management. Its optional but recommended.
@@ -51,8 +52,8 @@ class Output extends Component {
       a.risk > b.risk
         ? 1
         : a.risk < b.risk
-        ? -1
-        : a.stops.length - b.stops.length
+          ? -1
+          : a.stops.length - b.stops.length
     );
 
     const routesPromises = routes.map((route) => {
@@ -93,8 +94,39 @@ class Output extends Component {
     const showBest = this.state.bestMenu ? "show" : "";
     const showOptional = this.state.optionalMenu ? "show" : "";
 
+    let OptionalRoutes = (
+      <Alert variant="filled" severity="info" className="m-2">
+        抱歉！没有找到其他路线！
+      </Alert>
+    );
+
+    if (this.state.routes.length !== 1) {
+      OptionalRoutes = (<span>
+        {
+          this.state.routes.slice(1).map((route, index) => {
+            return (
+              <button
+                className="btn btn-block bt-muted"
+                onClick={() => this.selectRoute(index)}
+                key={index}
+              >
+                <Route route={route} />
+              </button>
+            );
+          })
+        }
+      </span>);
+    }
+
+
     return (
-      <div className="row align-self-center justify-content-center">
+      <span className="row vertical-center-row align-items-center justify-content-center"
+        style={{
+          border: 'none',
+          borderRadius: '10pt',
+          width: '98%',
+          position: 'relative'
+        }}>
         <div
           className="col-12 col-sm-6 card bg-muted"
           style={{
@@ -203,25 +235,13 @@ class Output extends Component {
           </button>
 
           <span id="optional" className={"card-body collapse " + showOptional}>
-            {this.state.routes.length &&
-              this.state.routes.slice(1).map((route, index) => {
-                return (
-                  <button
-                    className="btn btn-block bt-muted"
-                    onClick={() => this.selectRoute(index)}
-                    key={index}
-                  >
-                    <Route route={route} />
-                  </button>
-                );
-              })}
+            {OptionalRoutes}
           </span>
         </div>
 
         {this.state.routes.length && (
           <div
             className={"col-12 col-sm-6 "}
-            style={{ height: "400px", margin: "5" }}
           >
             <span
               className={"card bg-muted "}
@@ -248,7 +268,7 @@ class Output extends Component {
             />
           </div>
         )}
-      </div>
+      </span>
     );
   }
 }

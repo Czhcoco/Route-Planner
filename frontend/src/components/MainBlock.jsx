@@ -1,16 +1,11 @@
 import React, { Component } from "react";
 import Input from "./Input";
 import Output from "./Output";
-import DayPickerInput from "react-day-picker/DayPickerInput";
-import "react-day-picker/lib/style.css";
-import TransportationSelect from "./TransportationSelect";
-import DatePicker from "./DatePicker";
+import MaterialUIPickers from "./DatePicker";
 import data from "../City_Country.json";
 import Selector from "./Selector";
 import Button from "@material-ui/core/Button";
 import Alert from "@material-ui/lab/Alert";
-import Paper from "@material-ui/core/Paper";
-import { lightBlue } from "@material-ui/core/colors";
 
 class MainBlock extends Component {
   constructor(props) {
@@ -49,15 +44,15 @@ class MainBlock extends Component {
   };
 
   handleDayChange(selectedDay, modifiers, dayPickerInput) {
-    const input = dayPickerInput.getInput();
-    this.setState({
-      selectedDay,
-      isEmpty: !input.value.trim(),
-      isValidDay: typeof selectedDay !== "undefined",
-      isDisabled: modifiers.disabled === true,
-      error: false,
-      output: [],
-    });
+    // const input = dayPickerInput.getInput();
+    // this.setState({
+    //   selectedDay,
+    //   isEmpty: !input.value.trim(),
+    //   isValidDay: typeof selectedDay !== "undefined",
+    //   isDisabled: modifiers.disabled === true,
+    //   error: false,
+    //   output: [],
+    // });
   }
 
   changeTrans = (value) => {
@@ -80,12 +75,12 @@ class MainBlock extends Component {
   }
 
   fetchOutput() {
-    const { input, selectedDay } = this.state;
-    if (input.departure && input.arrival && selectedDay) {
-      const dateString = JSON.stringify(selectedDay).slice(1, 11);
+    const { input, /* selectedDay */ } = this.state;
+    if (input.departure && input.arrival /* && selectedDay */) {
+      // const dateString = JSON.stringify(selectedDay).slice(1, 11);
       console.log("fetchOutput");
       fetch(
-        "/query/" + input.departure + "/" + input.arrival + "/" + dateString
+        "/query/" + input.departure + "/" + input.arrival + "/" + "2020-10-25"
       )
         // .then((res) => res.text())
         // .then((text) => console.log(text));
@@ -116,29 +111,45 @@ class MainBlock extends Component {
   }
 
   handleOutput() {
-    if (this.state.output.length > 0)
+    if (this.state.output.length > 0) {
       return (
         <Output output={this.state.output} trans={this.state.input.trans} />
       );
+    } else {
+      return (
+        <div>
+          <p>注意事项</p>
+        </div>
+      )
+    }
   }
 
   render() {
     const cities = data;
-    const trans = ["飞机"];
+    const trans = ["飞机", "火车", "轮船"];
     const buttonStyles = {
-      height: 50,
-      width: 100,
-      fontSize: "20px",
-    };
-    const dayPickerStyles = {
-      height: 50,
-      margin: 10,
-
+      height: 55,
+      width: '100%',
+      fontSize: "18px",
     };
     return (
-      <div>
-        {/* <Paper elevation="3"> */}
-        <div className="row align-items-top">
+      <div className="card vertical-center-row align-items-center justify-content-center"
+        style={{
+          border: 'none',
+          borderRadius: '10pt',
+          backgroundColor: 'rgb(255, 255, 255, 0.88)',
+          width: '80%',
+          position: 'absolute', left: '50%', top: '50%',
+          transform: 'translate(-50%, -50%)'
+        }}>
+        <br />
+        <div className="row align-items-center justify-content-center"
+          style={{
+            border: 'none',
+            borderRadius: '10pt',
+            width: '98%',
+            position: 'relative'
+          }}>
           <div className="col-sm">
             <Input
               hint="出发地"
@@ -150,42 +161,35 @@ class MainBlock extends Component {
             <Input hint="到达地" items={cities} onChange={this.changeArrival} />
           </div>
           <div className="col-sm">
-            <Input hint="交通工具" items={trans} onChange={this.changeTrans} />
+            <Selector hint="交通工具" items={trans} onChange={this.changeTrans} />
           </div>
-          {/* <TransportationSelect /> */}
-          {/* <DatePicker /> */}
+
           <div className="col-sm">
-            <DayPickerInput
-              style={dayPickerStyles}
+            <MaterialUIPickers
               onDayChange={this.handleDayChange}
               selectedDay={this.state.selectedDay}
-              placeholder="日期: YYYY-MM-DD"
+              placeholder="YYYY-MM-DD"
               dayPickerProps={{ todayButton: "Today" }}
             />
           </div>
-          <div className="col-sm">
+
+          <div className="col-12 col-sm-2 align-items-center justify-content-center">
             <Button
               onClick={this.fetchOutput}
-              variant="contained"
+              variant="outlined"
               color="primary"
+              size={"large"}
               style={buttonStyles}
             >
               搜 索
             </Button>
           </div>
-
-          {/* <Selector /> */}
         </div>
-
-        {/* </Paper> */}
-
-        {/* <button className="btn btn-primary m-2" onClick={this.fetchOutput}>
-          Search
-        </button> */}
         <br />
         <br />
         {this.handleFetchError()}
         {this.handleOutput()}
+        <br />
       </div>
     );
   }
