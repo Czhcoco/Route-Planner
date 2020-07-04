@@ -124,8 +124,16 @@ class MainBlock extends Component {
       );
     } else {
       return (
-        <div>
+        <div className="p-3">
           <p>使用说明</p>
+          <ul>
+            <li>交通工具目前只提供“飞机”选项</li>
+            <li>起点和终点的选项括号内均为所属国家/地区</li>
+            <li>
+              本搜索工具使用的风险系数计算公式为：各路线风险系数 =
+              航班风险系数*飞行时长 + 转机过程风险系数*转机时长*0.5
+            </li>
+          </ul>
         </div>
       );
     }
@@ -144,22 +152,27 @@ class MainBlock extends Component {
       <div
         className="card vertical-center-row align-items-center justify-content-center"
         style={{
-          border: 'none',
-          borderRadius: '10pt',
-          backgroundColor: 'rgb(255, 255, 255, 0.88)',
-          width: '88%',
-          position: 'absolute', left: '50%', top: '50%',
-          transform: 'translate(-50%, -50%)'
-        }}>
-
-        <header className="jumbotron jumbotron-fluid row align-items-center justify-content-center"
+          border: "none",
+          borderRadius: "10pt",
+          backgroundColor: "rgb(255, 255, 255, 0.88)",
+          width: "88%",
+          position: "absolute",
+          left: "50%",
+          top: "50%",
+          transform: "translate(-50%, -50%)",
+        }}
+      >
+        <header
+          className="jumbotron jumbotron-fluid row align-items-center justify-content-center"
           style={{
-            backgroundColor: 'rgb(255, 255, 255, 0)',
-          }}>
-          <h1 style={{ textAlign: 'center' }} >$afe Route Planner</h1>
+            backgroundColor: "rgb(255, 255, 255, 0)",
+          }}
+        >
+          <h1 style={{ textAlign: "center" }}>$afe Route Planner</h1>
         </header>
 
-        <div className="row align-items-center justify-content-center"
+        <div
+          className="row align-items-center justify-content-center"
           style={{
             border: "none",
             borderRadius: "10pt",
@@ -180,7 +193,7 @@ class MainBlock extends Component {
               onChange={this.changeArrival}
             />
           </div>
-          <div className="col-md-2">
+          <div className="p-4 col-md-2">
             <Selector
               hint="交通工具"
               items={trans}
@@ -188,7 +201,7 @@ class MainBlock extends Component {
             />
           </div>
 
-          <div className="col-md-4">
+          <div className="p-3 col-md-4">
             <MaterialUIPickers onChange={this.handleDayChange} />
           </div>
 
