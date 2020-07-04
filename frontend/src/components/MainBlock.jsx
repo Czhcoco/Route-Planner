@@ -140,9 +140,12 @@ class MainBlock extends Component {
           </button>
           <div className={"card-body collapse " + (this.state.statement ? "show" : "")}>
             <ol textAlign={'left'}>
-              <li></li>
-              <li></li>
-              <li></li>
+            <li>交通工具目前只提供“飞机”选项</li>
+            <li>起点和终点的选项括号内均为所属国家/地区</li>
+            <li>
+              本搜索工具使用的风险系数计算公式为：各路线风险系数 =
+              航班风险系数*飞行时长 + 转机过程风险系数*转机时长*0.5
+            </li>
             </ol>
           </div>
           <div className="card-header" height={'100px'} fontSize={'12pt'} textAlign={'left'}>
@@ -184,7 +187,8 @@ class MainBlock extends Component {
             $afe Route Planner</h1>
         </header>
 
-        <div className="row align-items-center justify-content-center"
+        <div
+          className="row align-items-center justify-content-center"
           style={{
             border: "none",
             borderRadius: "10pt",
