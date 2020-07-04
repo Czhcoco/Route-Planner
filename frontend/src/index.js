@@ -4,22 +4,38 @@ import * as serviceWorker from "./serviceWorker";
 import "bootstrap/dist/css/bootstrap.css";
 import MainBlock from "./components/MainBlock";
 import "../src/index.css";
-import App from "./App";
+import GoogleFontLoader from 'react-google-font-loader';
+import { ThemeProvider } from '@material-ui/styles';
+import { createMuiTheme } from '@material-ui/core/styles';
+
+const THEME = createMuiTheme({
+  typography: {
+    "fontFamily": 'Rajdhani, Noto Serif SC'
+  }
+});
 
 ReactDOM.render(
   <React.StrictMode>
-    <header className="row align-items-center justify-content-center">
-      <div className="col-auto">
-        <br />
-        <br />
-        <h1>Route Planner</h1>
-        <br />
-        <br />
+    <GoogleFontLoader
+      fonts={[
+        {
+          font: 'Rajdhani',
+          weights: [500, '500i'],
+        },
+        {
+          font: 'Noto Serif SC',
+          weights: [500],
+        },
+      ]}
+    />
+    <ThemeProvider theme={THEME}>
+      <div className="container h-100 d-flex justify-content-center"
+        style={{
+          fontFamily: 'Rajdhani, Noto Serif SC',
+        }}>
+        <MainBlock />
       </div>
-    </header>
-    <div className="container h-100 d-flex justify-content-center">
-      <MainBlock />
-    </div>
+    </ThemeProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );

@@ -8,7 +8,7 @@ const ComboBox = (props) => {
       id="combo-box-demo"
       options={props.items}
       getOptionLabel={(option) => option.city + "(" + option.country + ")"}
-      style={{ width: 300 }}
+      style={{ width: "100%" }}
       renderInput={(params) => (
         <TextField {...params} label={props.hint} variant="outlined" />
       )}

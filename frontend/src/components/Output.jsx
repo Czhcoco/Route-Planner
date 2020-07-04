@@ -128,7 +128,7 @@ class Output extends Component {
           position: 'relative'
         }}>
         <div
-          className="col-12 col-sm-6 card bg-muted"
+          className="card col-12 col-sm-6 card bg-muted"
           style={{
             width: "98%",
             height: "98%",

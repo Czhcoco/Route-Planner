@@ -125,7 +125,7 @@ class MainBlock extends Component {
     } else {
       return (
         <div>
-          <p>注意事项</p>
+          <p>使用说明</p>
         </div>
       );
     }
@@ -139,23 +139,27 @@ class MainBlock extends Component {
       width: "100%",
       fontSize: "18px",
     };
+
     return (
       <div
         className="card vertical-center-row align-items-center justify-content-center"
         style={{
-          border: "none",
-          borderRadius: "10pt",
-          backgroundColor: "rgb(255, 255, 255, 0.88)",
-          width: "80%",
-          position: "absolute",
-          left: "50%",
-          top: "50%",
-          transform: "translate(-50%, -50%)",
-        }}
-      >
-        <br />
-        <div
-          className="row align-items-center justify-content-center"
+          border: 'none',
+          borderRadius: '10pt',
+          backgroundColor: 'rgb(255, 255, 255, 0.88)',
+          width: '88%',
+          position: 'absolute', left: '50%', top: '50%',
+          transform: 'translate(-50%, -50%)'
+        }}>
+
+        <header className="jumbotron jumbotron-fluid row align-items-center justify-content-center"
+          style={{
+            backgroundColor: 'rgb(255, 255, 255, 0)',
+          }}>
+          <h1 style={{ textAlign: 'center' }} >$afe Route Planner</h1>
+        </header>
+
+        <div className="row align-items-center justify-content-center"
           style={{
             border: "none",
             borderRadius: "10pt",
@@ -165,7 +169,6 @@ class MainBlock extends Component {
         >
           <div className="col-md-4">
             <ComboBox
-              classes={{ width: "1px" }}
               hint="起点"
               items={cities}
               onChange={this.changeDeparture}
