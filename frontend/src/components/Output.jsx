@@ -120,7 +120,7 @@ class Output extends Component {
 
 
     return (
-      <span className="row vertical-center-row align-items-center justify-content-center"
+      <span className="p-3 row vertical-center-row align-items-center justify-content-center"
         style={{
           border: 'none',
           borderRadius: '10pt',
@@ -128,7 +128,7 @@ class Output extends Component {
           position: 'relative'
         }}>
         <div
-          className="card col-12 col-sm-6 card bg-muted"
+          className="p-3 card col-12 col-sm-6 card bg-muted"
           style={{
             width: "98%",
             height: "98%",
@@ -241,10 +241,10 @@ class Output extends Component {
 
         {this.state.routes.length && (
           <div
-            className={"col-12 col-sm-6 "}
+            className={"p-3 col-12 col-sm-6 "}
           >
             <span
-              className={"card bg-muted "}
+              className={"p-3 card bg-muted "}
               style={{
                 width: "98%",
                 position: "relative",
@@ -262,7 +262,6 @@ class Output extends Component {
                 route={this.state.routes[this.state.routeIndex]}
               />
             </span>
-            <br />
             <Map
               positions={this.state.routes[this.state.routeIndex].positions}
             />

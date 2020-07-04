@@ -11,6 +11,7 @@ class MainBlock extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      statement: false,
       input: {
         departure: "",
         arrival: "",
@@ -124,8 +125,29 @@ class MainBlock extends Component {
       );
     } else {
       return (
-        <div>
-          <p>使用说明</p>
+        <div className="p-3 card row"
+          style={{
+            border: 'none',
+            borderRadius: '5pt',
+            textAlign: 'center',
+            backgroundColor: 'rgb(255, 255, 255, 0.5)',
+            color: '#73605C'
+          }}>
+          <button className="card-header "
+            onClick={() => { this.setState({ statement: !this.state.statement }) }}
+          >
+            使用说明
+          </button>
+          <div className={"card-body collapse " + (this.state.statement ? "show" : "")}>
+            <ol textAlign={'left'}>
+              <li></li>
+              <li></li>
+              <li></li>
+            </ol>
+          </div>
+          <div className="card-header" height={'100px'} fontSize={'12pt'} textAlign={'left'}>
+            footer
+          </div>
         </div>
       );
     }
@@ -146,17 +168,20 @@ class MainBlock extends Component {
         style={{
           border: 'none',
           borderRadius: '10pt',
-          backgroundColor: 'rgb(255, 255, 255, 0.88)',
+          backgroundColor: 'rgb(255, 255, 255, 0.8)',
           width: '88%',
-          position: 'absolute', left: '50%', top: '50%',
+          position: 'absolute',
+          left: '50%',
+          top: '50%',
           transform: 'translate(-50%, -50%)'
         }}>
 
         <header className="jumbotron jumbotron-fluid row align-items-center justify-content-center"
           style={{
-            backgroundColor: 'rgb(255, 255, 255, 0)',
+            backgroundColor: 'rgb(255, 255, 255, 0)'
           }}>
-          <h1 style={{ textAlign: 'center' }} >$afe Route Planner</h1>
+          <h1 style={{ textAlign: 'center', color: '#73605C' }}>
+            $afe Route Planner</h1>
         </header>
 
         <div className="row align-items-center justify-content-center"
@@ -167,21 +192,21 @@ class MainBlock extends Component {
             position: "relative",
           }}
         >
-          <div className="col-sm">
+          <div className="p-3 col-sm">
             <ComboBox
               hint="起点"
               items={cities}
               onChange={this.changeDeparture}
             />
           </div>
-          <div className="col-sm">
+          <div className="p-3 col-sm">
             <ComboBox
               hint="终点"
               items={cities}
               onChange={this.changeArrival}
             />
           </div>
-          <div className="col-sm">
+          <div className="p-3 col-sm">
             <Selector
               hint="交通工具"
               items={trans}
@@ -189,28 +214,25 @@ class MainBlock extends Component {
             />
           </div>
 
-          <div className="col-sm">
+          <div className="p-3 col-sm">
             <MaterialUIPickers onChange={this.handleDayChange} />
           </div>
 
-          <div className="col-12 col-sm-2 align-items-center justify-content-center">
+          <div className="p-3 col-12 col-sm-2 align-items-center justify-content-center">
             <Button
               onClick={this.fetchOutput}
-              variant="outlined"
+              variant="contained"
               color="primary"
               size={"large"}
               style={buttonStyles}
             >
-              搜 索
+              <span style={{ textAlign: 'center', color: '#F2EDEB' }}>搜 索</span>
             </Button>
           </div>
         </div>
-        <br />
-        <br />
         {this.handleFetchError()}
         {this.handleOutput()}
-        <br />
-      </div>
+      </div >
     );
   }
 }

@@ -11,7 +11,27 @@ import { createMuiTheme } from '@material-ui/core/styles';
 const THEME = createMuiTheme({
   typography: {
     "fontFamily": 'Rajdhani, Noto Serif SC'
-  }
+  },
+  palette: {
+    primary: {
+      main: '#7AA3BA',
+    },
+    secondary: {
+      main: '#BFB0AA',
+    },
+    error: {
+      main: '#A60303',
+    },
+    muted: {
+      main: '#F2EDEB'
+    },
+    success: {
+      main: '#4F8C64'
+    },
+    info: {
+      main: '#7AA3BA'
+    }
+  },
 });
 
 ReactDOM.render(

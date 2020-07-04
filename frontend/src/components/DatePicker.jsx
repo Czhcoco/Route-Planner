@@ -3,7 +3,7 @@ import React from "react";
 import MomentUtils from "@date-io/moment";
 import {
   MuiPickersUtilsProvider,
-  KeyboardDatePicker,
+  DatePicker,
 } from "@material-ui/pickers";
 
 const MaterialUIPickers = (props) => {
@@ -17,11 +17,12 @@ const MaterialUIPickers = (props) => {
 
   return (
     <MuiPickersUtilsProvider utils={MomentUtils}>
-      <KeyboardDatePicker
+      <DatePicker
         autoOk
-        variant="dialog"
+        variant="inline"
         showTodayButton={true}
         inputVariant="outlined"
+        color="secondary"
         label="日期"
         format="YYYY-MM-DD"
         value={selectedDate}
