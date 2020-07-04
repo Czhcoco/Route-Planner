@@ -14,7 +14,7 @@ class MainBlock extends Component {
       input: {
         departure: "",
         arrival: "",
-        // date: "",
+        date: "",
         trans: "飞机",
       },
       output: [],
@@ -43,16 +43,18 @@ class MainBlock extends Component {
     });
   };
 
-  handleDayChange(selectedDay, modifiers, dayPickerInput) {
-    // const input = dayPickerInput.getInput();
-    // this.setState({
-    //   selectedDay,
-    //   isEmpty: !input.value.trim(),
-    //   isValidDay: typeof selectedDay !== "undefined",
-    //   isDisabled: modifiers.disabled === true,
-    //   error: false,
-    //   output: [],
-    // });
+  handleDayChange(date) {
+    if (date) {
+      console.log(date["_d"].toJSON().slice(0, 10));
+
+      let input = { ...this.state.input };
+      input.date = date["_d"].toJSON().slice(0, 10);
+      this.setState({
+        input,
+        error: false,
+        output: [],
+      });
+    }
   }
 
   changeTrans = (value) => {
@@ -75,13 +77,10 @@ class MainBlock extends Component {
   }
 
   fetchOutput() {
-    const { input, /* selectedDay */ } = this.state;
-    if (input.departure && input.arrival /* && selectedDay */) {
-      // const dateString = JSON.stringify(selectedDay).slice(1, 11);
+    const { departure, arrival, date } = this.state.input;
+    if (departure && arrival && date) {
       console.log("fetchOutput");
-      fetch(
-        "/query/" + input.departure + "/" + input.arrival + "/" + "2020-10-25"
-      )
+      fetch("/query/" + departure + "/" + arrival + "/" + date)
         // .then((res) => res.text())
         // .then((text) => console.log(text));
         .then((response) => {
@@ -120,7 +119,7 @@ class MainBlock extends Component {
         <div>
           <p>注意事项</p>
         </div>
-      )
+      );
     }
   }
 
@@ -129,27 +128,33 @@ class MainBlock extends Component {
     const trans = ["飞机", "火车", "轮船"];
     const buttonStyles = {
       height: 55,
-      width: '100%',
+      width: "100%",
       fontSize: "18px",
     };
     return (
-      <div className="card vertical-center-row align-items-center justify-content-center"
+      <div
+        className="card vertical-center-row align-items-center justify-content-center"
         style={{
-          border: 'none',
-          borderRadius: '10pt',
-          backgroundColor: 'rgb(255, 255, 255, 0.88)',
-          width: '80%',
-          position: 'absolute', left: '50%', top: '50%',
-          transform: 'translate(-50%, -50%)'
-        }}>
+          border: "none",
+          borderRadius: "10pt",
+          backgroundColor: "rgb(255, 255, 255, 0.88)",
+          width: "80%",
+          position: "absolute",
+          left: "50%",
+          top: "50%",
+          transform: "translate(-50%, -50%)",
+        }}
+      >
         <br />
-        <div className="row align-items-center justify-content-center"
+        <div
+          className="row align-items-center justify-content-center"
           style={{
-            border: 'none',
-            borderRadius: '10pt',
-            width: '98%',
-            position: 'relative'
-          }}>
+            border: "none",
+            borderRadius: "10pt",
+            width: "98%",
+            position: "relative",
+          }}
+        >
           <div className="col-sm">
             <Input
               hint="出发地"
@@ -161,16 +166,15 @@ class MainBlock extends Component {
             <Input hint="到达地" items={cities} onChange={this.changeArrival} />
           </div>
           <div className="col-sm">
-            <Selector hint="交通工具" items={trans} onChange={this.changeTrans} />
+            <Selector
+              hint="交通工具"
+              items={trans}
+              onChange={this.changeTrans}
+            />
           </div>
 
           <div className="col-sm">
-            <MaterialUIPickers
-              onDayChange={this.handleDayChange}
-              selectedDay={this.state.selectedDay}
-              placeholder="YYYY-MM-DD"
-              dayPickerProps={{ todayButton: "Today" }}
-            />
+            <MaterialUIPickers onChange={this.handleDayChange} />
           </div>
 
           <div className="col-12 col-sm-2 align-items-center justify-content-center">

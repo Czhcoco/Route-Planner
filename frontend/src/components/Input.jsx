@@ -5,8 +5,8 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import "bootstrap/dist/css/bootstrap.css";
 import { Paper } from "@material-ui/core";
-import ScrollView from "react-native-scroll-view";
-import { Animated, Text, View, StyleSheet, Button } from "react-native";
+// import ScrollView from "react-native-scroll-view";
+// import { Animated, Text, View, StyleSheet, Button } from "react-native";
 
 class Input extends Component {
   constructor(props) {
