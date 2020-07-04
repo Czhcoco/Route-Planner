@@ -54,6 +54,8 @@ ReactDOM.render(
           fontFamily: 'Rajdhani, Noto Serif SC',
         }}>
         <MainBlock />
+        <br />
+        <br />
       </div>
     </ThemeProvider>
   </React.StrictMode>,

@@ -6,15 +6,14 @@ import Selector from "./Selector";
 import Button from "@material-ui/core/Button";
 import Alert from "@material-ui/lab/Alert";
 import ComboBox from "./ComboBox";
-import useWindowDimensions from "./useWindowDimensions";
 
 class MainBlock extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      statement: false,
+      statement: true,
       cardheight: 0,
-      top: '50%',
+      top: "50%",
       input: {
         departure: "",
         arrival: "",
@@ -28,16 +27,17 @@ class MainBlock extends Component {
   }
 
   setCardPosition() {
-    const { height } = useWindowDimensions();
+    const height = 600;
+    console.log("winSize: " + height);
     if (this.state.cardheight > height) {
-      const percent = String(this.state.cardheight / height * 50) + "%";
+      const percent = String((this.state.cardheight / height) * 50) + "%";
       this.setState({
-        top: percent
-      })
+        top: percent,
+      });
     } else {
       this.setState({
-        top: "50%"
-      })
+        top: "50%",
+      });
     }
   }
 
@@ -96,16 +96,19 @@ class MainBlock extends Component {
   componentDidMount() {
     console.log("MainBlock Mounted");
     this.setState({
-      cardheight: document.getElementById('card').clientHeight
+      cardheight: document.getElementById("card").clientHeight,
     });
     this.setCardPosition();
   }
 
   componentDidUpdate(prevProps, prevState) {
     console.log("MainBlock Updated");
-    this.setState({
-      cardheight: document.getElementById('card').clientHeight
-    });
+    const height = document.getElementById("card").clientHeight;
+    if (this.state.cardheight !== height) {
+      this.setState({
+        cardheight: height,
+      });
+    }
     if (this.state.cardheight !== prevState.cardheight) {
       this.setCardPosition();
     }
@@ -151,31 +154,42 @@ class MainBlock extends Component {
       );
     } else {
       return (
-        <div className="p-3 card row"
+        <div
+          className="p-3 card row"
           style={{
-            border: 'none',
-            borderRadius: '5pt',
-            textAlign: 'center',
-            backgroundColor: 'rgb(255, 255, 255, 0.5)',
-            color: '#73605C'
-          }}>
-          <button className="card-header "
-            onClick={() => { this.setState({ statement: !this.state.statement }) }}
+            border: "none",
+            borderRadius: "5pt",
+            width: "88%",
+            backgroundColor: "rgb(255, 255, 255, 0.5)",
+            color: "#73605C",
+          }}
+        >
+          <button
+            className="card-header bg-muted"
+            style={{
+              border: "none",
+              borderRadius: "5pt",
+              textAlign: "center",
+            }}
+            onClick={() => {
+              this.setState({ statement: !this.state.statement });
+            }}
           >
             使用说明
           </button>
-          <div className={"card-body collapse " + (this.state.statement ? "show" : "")}>
-            <ol textAlign={'left'}>
+          <div
+            className={
+              "card-body collapse" + (this.state.statement ? " show" : "")
+            }
+          >
+            <ol>
+              <li>交通工具目前只提供“飞机”选项</li>
+              <li>起点和终点的选项括号内均为所属国家/地区</li>
               <li>
-                交通工具目前只提供“飞机”选项
-              </li>
-              <li>
-                起点和终点的选项括号内均为所属国家/地区
-              </li>
-              <li>
-                本搜索工具使用的风险系数计算公式为（仅供参考）：各路线风险系数 =
+                本搜索工具使用的风险系数计算公式为：各路线风险系数 =
                 航班风险系数*飞行时长 + 转机过程风险系数*转机时长*0.5
               </li>
+              <li>疫情数据由于信息来源限制不够完善，结果仅供参考</li>
             </ol>
           </div>
         </div>
@@ -195,24 +209,27 @@ class MainBlock extends Component {
     return (
       <div
         id="card"
-        className="card vertical-center-row align-items-center justify-content-center"
+        className="p-3 card vertical-center-row align-items-center justify-content-center"
         style={{
-          border: 'none',
-          borderRadius: '10pt',
-          backgroundColor: 'rgb(255, 255, 255, 0.8)',
-          width: '88%',
-          position: 'absolute',
-          left: '50%',
+          border: "none",
+          borderRadius: "10pt",
+          backgroundColor: "rgb(255, 255, 255, 0.8)",
+          width: "88%",
+          position: "absolute",
+          left: "50%",
           top: this.state.top,
-          transform: 'translate(-50%, -50%)'
-        }}>
-
-        <header className="jumbotron jumbotron-fluid row align-items-center justify-content-center"
+          transform: "translate(-50%, -50%)",
+        }}
+      >
+        <header
+          className="jumbotron jumbotron-fluid row align-items-center justify-content-center"
           style={{
-            backgroundColor: 'rgb(255, 255, 255, 0)'
-          }}>
-          <h1 style={{ textAlign: 'center', color: '#73605C' }}>
-            $afe Route Planner</h1>
+            backgroundColor: "rgb(255, 255, 255, 0)",
+          }}
+        >
+          <h1 style={{ textAlign: "center", color: "#73605C" }}>
+            $afe Route Planner
+          </h1>
         </header>
 
         <div
@@ -258,17 +275,26 @@ class MainBlock extends Component {
               size={"large"}
               style={buttonStyles}
             >
-              <span style={{ textAlign: 'center', color: '#F2EDEB' }}>搜 索</span>
+              <span style={{ textAlign: "center", color: "#F2EDEB" }}>
+                搜 索
+              </span>
             </Button>
           </div>
         </div>
         {this.handleFetchError()}
         {this.handleOutput()}
 
-        <footer className={'MuiTypography-root MuiTypography-caption MuiTypography-colorTextSecondary MuiTypography-alignCenter'}>
-          Copyright © 2020 Google Girl Hackathon Team - Fire Chicken - CAI Zhihan, LYU Hanfang, NIE Fei
+        <br />
+
+        <footer
+          className={
+            "MuiTypography-root MuiTypography-caption MuiTypography-colorTextSecondary MuiTypography-alignCenter"
+          }
+        >
+          Copyright © 2020 Google Girl Hackathon Team - Fire Chicken - CAI
+          Zhihan, LYU Hanfang, NIE Fei
         </footer>
-      </div >
+      </div>
     );
   }
 }

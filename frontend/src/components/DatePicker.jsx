@@ -20,13 +20,11 @@ const MaterialUIPickers = (props) => {
       <DatePicker
         autoOk
         variant="inline"
-        showTodayButton={true}
         inputVariant="outlined"
         color="secondary"
         label="日期"
         format="YYYY-MM-DD"
         value={selectedDate}
-        InputAdornmentProps={{ position: "start" }}
         onChange={handleDateChange}
       />
     </MuiPickersUtilsProvider>

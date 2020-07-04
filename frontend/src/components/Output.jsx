@@ -120,7 +120,7 @@ class Output extends Component {
 
 
     return (
-      <span className="p-3 row vertical-center-row align-items-center justify-content-center"
+      <span className="p-3 row align-items-center justify-content-center"
         style={{
           border: 'none',
           borderRadius: '10pt',
