@@ -43,22 +43,22 @@ class Input extends Component {
       return (
         <Paper>
           <div>
-            <ScrollView>
-              <List component="nav" aria-label="main mailbox folders">
-                {suggestions.map((item) => (
-                  <ListItem
-                    onClick={() => this.suggestionSelected(item.city)}
-                    key={item.city}
-                    button
-                  >
-                    <ListItemText
-                      primary={item.city}
-                      secondary={"国家/地区：" + item.country}
-                    />
-                  </ListItem>
-                ))}
-              </List>
-            </ScrollView>
+            {/* <ScrollView> */}
+            <List component="nav" aria-label="main mailbox folders">
+              {suggestions.map((item) => (
+                <ListItem
+                  onClick={() => this.suggestionSelected(item.city)}
+                  key={item.city}
+                  button
+                >
+                  <ListItemText
+                    primary={item.city}
+                    secondary={"国家/地区：" + item.country}
+                  />
+                </ListItem>
+              ))}
+            </List>
+            {/* </ScrollView> */}
           </div>
         </Paper>
       );
