@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-import Input from "./Input";
 import Output from "./Output";
 import MaterialUIPickers from "./DatePicker";
 import data from "../City_Country.json";
 import Selector from "./Selector";
 import Button from "@material-ui/core/Button";
 import Alert from "@material-ui/lab/Alert";
+import ComboBox from "./ComboBox";
 
 class MainBlock extends Component {
   constructor(props) {
@@ -23,9 +23,11 @@ class MainBlock extends Component {
     this.handleDayChange = this.handleDayChange.bind(this);
   }
 
-  changeDeparture = (value) => {
+  changeDeparture = (values) => {
+    let departure = "";
+    if (values) departure = values.city;
     let input = { ...this.state.input };
-    input.departure = value;
+    input.departure = departure;
     this.setState({
       input,
       error: false,
@@ -33,9 +35,11 @@ class MainBlock extends Component {
     });
   };
 
-  changeArrival = (value) => {
+  changeArrival = (values) => {
+    let arrival = "";
+    if (values) arrival = values.city;
     let input = { ...this.state.input };
-    input.arrival = value;
+    input.arrival = arrival;
     this.setState({
       input,
       error: false,
@@ -44,9 +48,13 @@ class MainBlock extends Component {
   };
 
   handleDayChange(date) {
-    if (date) {
-      console.log(date["_d"].toJSON().slice(0, 10));
-
+    if (date["_d"].toJSON()) {
+      console.log(date["_d"]);
+      console.log(date["_d"].getUTCFullYear());
+      console.log(date["_d"].getUTCMonth());
+      console.log(date["_d"].getUTCDate());
+      console.log(date["_d"].toJSON());
+      //?????
       let input = { ...this.state.input };
       input.date = date["_d"].toJSON().slice(0, 10);
       this.setState({
@@ -156,14 +164,19 @@ class MainBlock extends Component {
           }}
         >
           <div className="col-sm">
-            <Input
-              hint="出发地"
+            <ComboBox
+              classes={{ width: "1px" }}
+              hint="起点"
               items={cities}
               onChange={this.changeDeparture}
             />
           </div>
           <div className="col-sm">
-            <Input hint="到达地" items={cities} onChange={this.changeArrival} />
+            <ComboBox
+              hint="终点"
+              items={cities}
+              onChange={this.changeArrival}
+            />
           </div>
           <div className="col-sm">
             <Selector
