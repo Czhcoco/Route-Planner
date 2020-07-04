@@ -1,12 +1,11 @@
 import React, { Component } from "react";
-import Input from "./Input";
 import Output from "./Output";
 import MaterialUIPickers from "./DatePicker";
 import data from "../City_Country.json";
 import Selector from "./Selector";
 import Button from "@material-ui/core/Button";
 import Alert from "@material-ui/lab/Alert";
-import GoogleFontLoader from 'react-google-font-loader';
+import ComboBox from "./ComboBox";
 
 class MainBlock extends Component {
   constructor(props) {
@@ -15,7 +14,7 @@ class MainBlock extends Component {
       input: {
         departure: "",
         arrival: "",
-        // date: "",
+        date: "",
         trans: "飞机",
       },
       output: [],
@@ -24,9 +23,11 @@ class MainBlock extends Component {
     this.handleDayChange = this.handleDayChange.bind(this);
   }
 
-  changeDeparture = (value) => {
+  changeDeparture = (values) => {
+    let departure = "";
+    if (values) departure = values.city;
     let input = { ...this.state.input };
-    input.departure = value;
+    input.departure = departure;
     this.setState({
       input,
       error: false,
@@ -34,9 +35,11 @@ class MainBlock extends Component {
     });
   };
 
-  changeArrival = (value) => {
+  changeArrival = (values) => {
+    let arrival = "";
+    if (values) arrival = values.city;
     let input = { ...this.state.input };
-    input.arrival = value;
+    input.arrival = arrival;
     this.setState({
       input,
       error: false,
@@ -44,16 +47,22 @@ class MainBlock extends Component {
     });
   };
 
-  handleDayChange(selectedDay, modifiers, dayPickerInput) {
-    // const input = dayPickerInput.getInput();
-    // this.setState({
-    //   selectedDay,
-    //   isEmpty: !input.value.trim(),
-    //   isValidDay: typeof selectedDay !== "undefined",
-    //   isDisabled: modifiers.disabled === true,
-    //   error: false,
-    //   output: [],
-    // });
+  handleDayChange(date) {
+    if (date["_d"].toJSON()) {
+      console.log(date["_d"]);
+      console.log(date["_d"].getUTCFullYear());
+      console.log(date["_d"].getUTCMonth());
+      console.log(date["_d"].getUTCDate());
+      console.log(date["_d"].toJSON());
+      //?????
+      let input = { ...this.state.input };
+      input.date = date["_d"].toJSON().slice(0, 10);
+      this.setState({
+        input,
+        error: false,
+        output: [],
+      });
+    }
   }
 
   changeTrans = (value) => {
@@ -76,13 +85,10 @@ class MainBlock extends Component {
   }
 
   fetchOutput() {
-    const { input, /* selectedDay */ } = this.state;
-    if (input.departure && input.arrival /* && selectedDay */) {
-      // const dateString = JSON.stringify(selectedDay).slice(1, 11);
+    const { departure, arrival, date } = this.state.input;
+    if (departure && arrival && date) {
       console.log("fetchOutput");
-      fetch(
-        "/query/" + input.departure + "/" + input.arrival + "/" + "2020-10-25"
-      )
+      fetch("/query/" + departure + "/" + arrival + "/" + date)
         // .then((res) => res.text())
         // .then((text) => console.log(text));
         .then((response) => {
@@ -121,7 +127,7 @@ class MainBlock extends Component {
         <div>
           <p>注意事项</p>
         </div>
-      )
+      );
     }
   }
 
@@ -130,12 +136,13 @@ class MainBlock extends Component {
     const trans = ["飞机", "火车", "轮船"];
     const buttonStyles = {
       height: 55,
-      width: '100%',
+      width: "100%",
       fontSize: "18px",
     };
 
     return (
-      <div className="card vertical-center-row align-items-center justify-content-center"
+      <div
+        className="card vertical-center-row align-items-center justify-content-center"
         style={{
           border: 'none',
           borderRadius: '10pt',
@@ -145,24 +152,9 @@ class MainBlock extends Component {
           transform: 'translate(-50%, -50%)'
         }}>
 
-        <GoogleFontLoader
-          fonts={[
-            {
-              font: 'Rajdhani',
-              weights: [500, '500i'],
-            },
-            {
-              font: 'Roboto Mono',
-              weights: [400, 700],
-            },
-          ]}
-          subsets={['cyrillic-ext', 'greek']}
-        />
-
         <header className="jumbotron jumbotron-fluid row align-items-center justify-content-center"
           style={{
             backgroundColor: 'rgb(255, 255, 255, 0)',
-            fontFamily: 'Rajdhani',
           }}>
           <div className="col-auto">
             <h1>$afe Route Planner</h1>
@@ -171,32 +163,36 @@ class MainBlock extends Component {
 
         <div className="row align-items-center justify-content-center"
           style={{
-            border: 'none',
-            borderRadius: '10pt',
-            width: '98%',
-            position: 'relative'
-          }}>
+            border: "none",
+            borderRadius: "10pt",
+            width: "98%",
+            position: "relative",
+          }}
+        >
           <div className="col-sm">
-            <Input
-              hint="出发地"
+            <ComboBox
+              hint="起点"
               items={cities}
               onChange={this.changeDeparture}
             />
           </div>
           <div className="col-sm">
-            <Input hint="到达地" items={cities} onChange={this.changeArrival} />
+            <ComboBox
+              hint="终点"
+              items={cities}
+              onChange={this.changeArrival}
+            />
           </div>
           <div className="col-sm">
-            <Selector hint="交通工具" items={trans} onChange={this.changeTrans} />
+            <Selector
+              hint="交通工具"
+              items={trans}
+              onChange={this.changeTrans}
+            />
           </div>
 
           <div className="col-sm">
-            <MaterialUIPickers
-              onDayChange={this.handleDayChange}
-              selectedDay={this.state.selectedDay}
-              placeholder="YYYY-MM-DD"
-              dayPickerProps={{ todayButton: "Today" }}
-            />
+            <MaterialUIPickers onChange={this.handleDayChange} />
           </div>
 
           <div className="col-12 col-sm-2 align-items-center justify-content-center">
