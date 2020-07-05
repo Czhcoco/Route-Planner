@@ -81,11 +81,17 @@ class Output extends Component {
   }
 
   componentDidMount() {
+    console.log("Output mount");
     this.getRoutes();
+    this.props.onUpdate();
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps, prevState) {
+    console.log("Output update");
+    this.props.onUpdate();
+
     if (this.props.output !== prevProps.output) {
+      console.log("this.props.output !== prevProps.output")
       this.getRoutes();
     }
   }
@@ -120,7 +126,8 @@ class Output extends Component {
 
 
     return (
-      <span className="p-3 row align-items-center justify-content-center"
+      <span id="output"
+        className="p-3 row align-items-center justify-content-center"
         style={{
           border: 'none',
           borderRadius: '10pt',
@@ -262,8 +269,10 @@ class Output extends Component {
                 route={this.state.routes[this.state.routeIndex]}
               />
             </span>
+            <br />
             <Map
               positions={this.state.routes[this.state.routeIndex].positions}
+              onUpdate={() => this.props.onUpdate()}
             />
           </div>
         )}

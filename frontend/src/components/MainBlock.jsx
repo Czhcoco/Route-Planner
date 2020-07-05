@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { withWindowSizeListener } from "react-window-size-listener";
+import { withResizeDetector } from 'react-resize-detector';
 import Output from "./Output";
 import MaterialUIPickers from "./DatePicker";
 import data from "../City_Country.json";
@@ -18,7 +19,7 @@ class MainBlock extends Component {
       input: {
         departure: "",
         arrival: "",
-        date: "",
+        date: "2020-10-25",
         trans: "飞机",
       },
       output: [],
@@ -30,12 +31,17 @@ class MainBlock extends Component {
   setCardPosition() {
     const height = this.props.windowSize.windowHeight;
     console.log("winheight: " + height);
-    if (this.state.cardheight > height) {
-      const percent = String(parseFloat(this.state.cardheight / height) * 50 + 1) + "%";
+
+    const cardHeight = this.props.height;
+    console.log("card height: " + cardHeight);
+
+    const percent = String(parseFloat(cardHeight / height) * 50 + 1) + "%";
+
+    if (cardHeight >= height && this.state.top !== percent) {
       this.setState({
         top: percent,
       });
-    } else {
+    } else if (cardHeight < height && this.state.top !== '50%') {
       this.setState({
         top: "50%",
       });
@@ -97,14 +103,14 @@ class MainBlock extends Component {
   componentDidMount() {
     console.log("MainBlock Mounted");
     this.setState({
-      cardheight: document.getElementById("card").clientHeight,
+      cardheight: this.props.height,
     });
     this.setCardPosition();
   }
 
   componentDidUpdate(prevProps, prevState) {
     console.log("MainBlock Updated");
-    const height = document.getElementById("card").clientHeight;
+    const height = this.props.height;
     if (this.state.cardheight !== height) {
       this.setState({
         cardheight: height,
@@ -151,7 +157,8 @@ class MainBlock extends Component {
   handleOutput() {
     if (this.state.output.length > 0) {
       return (
-        <Output output={this.state.output} trans={this.state.input.trans} />
+        <Output output={this.state.output}
+          onUpdate={() => this.setCardPosition()} />
       );
     } else {
       return (
@@ -209,7 +216,7 @@ class MainBlock extends Component {
 
     return (
       <div
-        id="card"
+        id="mainblock"
         className="p-3 card vertical-center-row align-items-center justify-content-center"
         style={{
           border: "none",
@@ -303,4 +310,4 @@ class MainBlock extends Component {
   }
 }
 
-export default withWindowSizeListener(MainBlock);
+export default withWindowSizeListener(withResizeDetector(MainBlock));
