@@ -83,12 +83,10 @@ class Output extends Component {
   componentDidMount() {
     console.log("Output mount");
     this.getRoutes();
-    this.props.onUpdate();
   }
 
   componentDidUpdate(prevProps, prevState) {
     console.log("Output update");
-    this.props.onUpdate();
 
     if (this.props.output !== prevProps.output) {
       console.log("this.props.output !== prevProps.output")
@@ -272,7 +270,6 @@ class Output extends Component {
             <br />
             <Map
               positions={this.state.routes[this.state.routeIndex].positions}
-              onUpdate={() => this.props.onUpdate()}
             />
           </div>
         )}

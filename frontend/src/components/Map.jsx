@@ -29,16 +29,6 @@ class Map extends React.PureComponent {
     // You can also log error messages to an error reporting service here
   }
 
-  // componentDidMount() {
-  //   console.log("Map mount");
-  //   this.props.onUpdate();
-  // }
-
-  // componentDidUpdate() {
-  //   console.log("Map update");
-  //   this.props.onUpdate();
-  // }
-
   render() {
     console.log("map rendering");
 

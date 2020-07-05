@@ -157,8 +157,7 @@ class MainBlock extends Component {
   handleOutput() {
     if (this.state.output.length > 0) {
       return (
-        <Output output={this.state.output}
-          onUpdate={() => this.setCardPosition()} />
+        <Output output={this.state.output} />
       );
     } else {
       return (
