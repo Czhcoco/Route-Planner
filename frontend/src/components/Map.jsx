@@ -45,9 +45,9 @@ class Map extends React.PureComponent {
     }
 
     const containerStyle = {
-      height: "98%",
+      height: "100%",
+      width: "100%",
       positions: "relative",
-      width: "98%",
       borderRadius: "10pt",
     };
 

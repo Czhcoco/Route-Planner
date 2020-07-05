@@ -5,7 +5,6 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 const ComboBox = (props) => {
   return (
     <Autocomplete
-      id="combo-box-demo"
       options={props.items}
       getOptionLabel={(option) => option.city + "(" + option.country + ")"}
       style={{ width: "100%" }}

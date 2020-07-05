@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { withWindowSizeListener } from "react-window-size-listener";
 import Output from "./Output";
 import MaterialUIPickers from "./DatePicker";
 import data from "../City_Country.json";
@@ -27,10 +28,10 @@ class MainBlock extends Component {
   }
 
   setCardPosition() {
-    const height = 600;
-    console.log("winSize: " + height);
+    const height = this.props.windowSize.windowHeight;
+    console.log("winheight: " + height);
     if (this.state.cardheight > height) {
-      const percent = String((this.state.cardheight / height) * 50) + "%";
+      const percent = String(parseFloat(this.state.cardheight / height) * 50 + 1) + "%";
       this.setState({
         top: percent,
       });
@@ -225,6 +226,7 @@ class MainBlock extends Component {
           className="jumbotron jumbotron-fluid row align-items-center justify-content-center"
           style={{
             backgroundColor: "rgb(255, 255, 255, 0)",
+            paddingTop: '80px'
           }}
         >
           <h1 style={{ textAlign: "center", color: "#73605C" }}>
@@ -291,12 +293,14 @@ class MainBlock extends Component {
             "MuiTypography-root MuiTypography-caption MuiTypography-colorTextSecondary MuiTypography-alignCenter"
           }
         >
-          Copyright © 2020 Google Girl Hackathon Team - Fire Chicken - CAI
-          Zhihan, LYU Hanfang, NIE Fei
+          <p style={{ textAlign: "center" }}>
+            Copyright © 2020 Google Girl Hackathon Team - Fire Chicken - CAI
+            Zhihan, LYU Hanfang, NIE Fei
+          </p>
         </footer>
       </div>
     );
   }
 }
 
-export default MainBlock;
+export default withWindowSizeListener(MainBlock);

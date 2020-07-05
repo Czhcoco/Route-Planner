@@ -130,8 +130,8 @@ class Output extends Component {
         <div
           className="p-3 card col-12 col-sm-6 card bg-muted"
           style={{
-            width: "98%",
-            height: "98%",
+            width: "100%",
+            height: "100%",
             position: "relative",
             borderRadius: "10pt",
           }}
@@ -246,7 +246,7 @@ class Output extends Component {
             <span
               className={"p-3 card bg-muted "}
               style={{
-                width: "98%",
+                width: "100%",
                 position: "relative",
                 borderRadius: "10pt",
               }}
