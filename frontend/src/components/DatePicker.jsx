@@ -1,14 +1,13 @@
 import "moment";
 import React from "react";
 import MomentUtils from "@date-io/moment";
-import {
-  MuiPickersUtilsProvider,
-  DatePicker,
-} from "@material-ui/pickers";
+import { MuiPickersUtilsProvider, DatePicker } from "@material-ui/pickers";
 
 const MaterialUIPickers = (props) => {
   // The first commit of Material-UI
-  const [selectedDate, setSelectedDate] = React.useState(new Date('2020-10-25'));
+  const [selectedDate, setSelectedDate] = React.useState(
+    new Date("2020-10-25")
+  );
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
@@ -19,13 +18,15 @@ const MaterialUIPickers = (props) => {
     <MuiPickersUtilsProvider utils={MomentUtils}>
       <DatePicker
         autoOk
-        variant="inline"
+        variant="dialog"
         inputVariant="outlined"
         color="secondary"
         label="日期"
         format="YYYY-MM-DD"
         value={selectedDate}
         onChange={handleDateChange}
+        clearable={true}
+        showTodayButton={true}
       />
     </MuiPickersUtilsProvider>
   );

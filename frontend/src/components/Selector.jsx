@@ -1,13 +1,13 @@
 import React, { Component } from "react";
-import TextField from '@material-ui/core/TextField';
-import Autocomplete from '@material-ui/lab/Autocomplete';
+import TextField from "@material-ui/core/TextField";
+import Autocomplete from "@material-ui/lab/Autocomplete";
 
 class Selector extends Component {
   render() {
     return (
       <Autocomplete
         id="disabled-options-demo"
-        onChange={this.props.onChange}
+        onChange={(e, values) => this.props.onChange(values)}
         options={this.props.items}
         getOptionDisabled={(option) => option !== "飞机"}
         renderInput={(params) => (

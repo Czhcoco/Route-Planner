@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { withWindowSizeListener } from "react-window-size-listener";
-import { withResizeDetector } from 'react-resize-detector';
+import { withResizeDetector } from "react-resize-detector";
 import Output from "./Output";
 import MaterialUIPickers from "./DatePicker";
 import data from "../City_Country.json";
@@ -14,13 +14,14 @@ class MainBlock extends Component {
     super(props);
     this.state = {
       statement: true,
+      incomplete: false,
       cardheight: 0,
       top: "50%",
       input: {
         departure: "",
         arrival: "",
         date: "2020-10-25",
-        trans: "飞机",
+        trans: "",
       },
       output: [],
     };
@@ -41,7 +42,7 @@ class MainBlock extends Component {
       this.setState({
         top: percent,
       });
-    } else if (cardHeight < height && this.state.top !== '50%') {
+    } else if (cardHeight < height && this.state.top !== "50%") {
       this.setState({
         top: "50%",
       });
@@ -74,12 +75,6 @@ class MainBlock extends Component {
 
   handleDayChange(date) {
     if (date["_d"].toJSON()) {
-      console.log(date["_d"]);
-      console.log(date["_d"].getUTCFullYear());
-      console.log(date["_d"].getUTCMonth());
-      console.log(date["_d"].getUTCDate());
-      console.log(date["_d"].toJSON());
-      //?????
       let input = { ...this.state.input };
       input.date = date["_d"].toJSON().slice(0, 10);
       this.setState({
@@ -90,9 +85,11 @@ class MainBlock extends Component {
     }
   }
 
-  changeTrans = (value) => {
+  changeTrans = (values) => {
+    let trans = "";
     let input = { ...this.state.input };
-    input.trans = "飞机";
+    if (values) trans = values;
+    input.trans = trans;
     this.setState({
       input,
       error: false,
@@ -122,8 +119,9 @@ class MainBlock extends Component {
   }
 
   fetchOutput() {
-    const { departure, arrival, date } = this.state.input;
-    if (departure && arrival && date) {
+    const { departure, arrival, date, trans } = this.state.input;
+    if (departure && arrival && date && trans) {
+      this.setState({ incomplete: false });
       console.log("fetchOutput");
       fetch("/query/" + departure + "/" + arrival + "/" + date)
         // .then((res) => res.text())
@@ -139,6 +137,21 @@ class MainBlock extends Component {
           console.log(err);
           this.setState({ error: true });
         });
+    } else {
+      this.setState({ incomplete: true });
+    }
+  }
+
+  handleIncomplete() {
+    if (this.state.incomplete) {
+      // this.setState({ incomplete: false });
+      return (
+        <div>
+          <Alert variant="filled" severity="info" className="m-2">
+            请完善选项！
+          </Alert>
+        </div>
+      );
     }
   }
 
@@ -156,9 +169,7 @@ class MainBlock extends Component {
 
   handleOutput() {
     if (this.state.output.length > 0) {
-      return (
-        <Output output={this.state.output} />
-      );
+      return <Output output={this.state.output} />;
     } else {
       return (
         <div
@@ -232,7 +243,7 @@ class MainBlock extends Component {
           className="jumbotron jumbotron-fluid row align-items-center justify-content-center"
           style={{
             backgroundColor: "rgb(255, 255, 255, 0)",
-            paddingTop: '80px'
+            paddingTop: "80px",
           }}
         >
           <h1 style={{ textAlign: "center", color: "#73605C" }}>
@@ -289,6 +300,7 @@ class MainBlock extends Component {
             </Button>
           </div>
         </div>
+        {this.handleIncomplete()}
         {this.handleFetchError()}
         {this.handleOutput()}
 
