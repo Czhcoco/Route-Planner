@@ -56,7 +56,7 @@ ReactDOM.render(
           fontFamily: "Rajdhani, Noto Serif SC",
         }}
       >
-        <MainBlock winheight={600} />
+        <MainBlock />
         <br />
         <br />
       </div>
