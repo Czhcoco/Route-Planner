@@ -31,10 +31,8 @@ class MainBlock extends Component {
 
   setCardPosition() {
     const height = this.props.windowSize.windowHeight;
-    console.log("winheight: " + height);
 
     const cardHeight = this.props.height;
-    console.log("card height: " + cardHeight);
 
     const percent = String(parseFloat(cardHeight / height) * 50 + 1) + "%";
 
@@ -98,7 +96,6 @@ class MainBlock extends Component {
   };
 
   componentDidMount() {
-    console.log("MainBlock Mounted");
     this.setState({
       cardheight: this.props.height,
     });
@@ -106,7 +103,6 @@ class MainBlock extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log("MainBlock Updated");
     const height = this.props.height;
     if (this.state.cardheight !== height) {
       this.setState({
@@ -122,10 +118,7 @@ class MainBlock extends Component {
     const { departure, arrival, date, trans } = this.state.input;
     if (departure && arrival && date && trans) {
       this.setState({ incomplete: false });
-      console.log("fetchOutput");
       fetch("/query/" + departure + "/" + arrival + "/" + date)
-        // .then((res) => res.text())
-        // .then((text) => console.log(text));
         .then((response) => {
           if (!response.ok) {
             throw new Error(response.statusText);
@@ -134,7 +127,6 @@ class MainBlock extends Component {
         })
         .then((output) => this.setState({ output: output["result:"] }))
         .catch((err) => {
-          console.log(err);
           this.setState({ error: true });
         });
     } else {
@@ -144,7 +136,6 @@ class MainBlock extends Component {
 
   handleIncomplete() {
     if (this.state.incomplete) {
-      // this.setState({ incomplete: false });
       return (
         <div>
           <Alert variant="filled" severity="info" className="m-2">

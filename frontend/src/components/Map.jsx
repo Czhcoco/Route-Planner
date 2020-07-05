@@ -17,7 +17,6 @@ class Map extends React.PureComponent {
       error: null,
       errorInfo: null,
     };
-    console.log(this.props.positions);
   }
 
   componentDidCatch(error, errorInfo) {
@@ -30,8 +29,6 @@ class Map extends React.PureComponent {
   }
 
   render() {
-    console.log("map rendering");
-
     if (
       this.state.errorInfo ||
       this.props.positions.length === 0 ||
@@ -71,7 +68,6 @@ class Map extends React.PureComponent {
       }
       lat /= this.props.positions.length;
       lng /= this.props.positions.length;
-      console.log(lat);
 
       return {
         lat: parseFloat(lat),

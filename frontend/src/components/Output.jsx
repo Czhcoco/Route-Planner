@@ -45,15 +45,12 @@ class Output extends Component {
   }
 
   getRoutes() {
-    console.log("get routes");
-    console.log(this.props.output);
-
     let routes = this.props.output.sort((a, b) =>
       a.risk > b.risk
         ? 1
         : a.risk < b.risk
-          ? -1
-          : a.stops.length - b.stops.length
+        ? -1
+        : a.stops.length - b.stops.length
     );
 
     const routesPromises = routes.map((route) => {
@@ -81,15 +78,11 @@ class Output extends Component {
   }
 
   componentDidMount() {
-    console.log("Output mount");
     this.getRoutes();
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    console.log("Output update");
-
+  componentDidUpdate(prevProps) {
     if (this.props.output !== prevProps.output) {
-      console.log("this.props.output !== prevProps.output")
       this.getRoutes();
     }
   }
@@ -105,9 +98,9 @@ class Output extends Component {
     );
 
     if (this.state.routes.length !== 1) {
-      OptionalRoutes = (<span>
-        {
-          this.state.routes.slice(1).map((route, index) => {
+      OptionalRoutes = (
+        <span>
+          {this.state.routes.slice(1).map((route, index) => {
             return (
               <button
                 className="btn btn-block bt-muted"
@@ -117,26 +110,26 @@ class Output extends Component {
                 <Route route={route} />
               </button>
             );
-          })
-        }
-      </span>);
+          })}
+        </span>
+      );
     }
 
-
     return (
-      <span id="output"
-        className="p-3 row align-items-center justify-content-center"
+      <span
+        className="p-3 row vertical-center-row align-items-center justify-content-center"
         style={{
-          border: 'none',
-          borderRadius: '10pt',
-          width: '98%',
-          position: 'relative'
-        }}>
+          border: "none",
+          borderRadius: "10pt",
+          width: "98%",
+          position: "relative",
+        }}
+      >
         <div
           className="p-3 card col-12 col-sm-6 card bg-muted"
           style={{
-            width: "100%",
-            height: "100%",
+            width: "98%",
+            height: "98%",
             position: "relative",
             borderRadius: "10pt",
           }}
@@ -245,13 +238,11 @@ class Output extends Component {
         </div>
 
         {this.state.routes.length && (
-          <div
-            className={"p-3 col-12 col-sm-6 "}
-          >
+          <div className={"p-3 col-12 col-sm-6 "}>
             <span
               className={"p-3 card bg-muted "}
               style={{
-                width: "100%",
+                width: "98%",
                 position: "relative",
                 borderRadius: "10pt",
               }}
@@ -267,7 +258,6 @@ class Output extends Component {
                 route={this.state.routes[this.state.routeIndex]}
               />
             </span>
-            <br />
             <Map
               positions={this.state.routes[this.state.routeIndex].positions}
             />
