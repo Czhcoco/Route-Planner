@@ -5,6 +5,10 @@ app = Flask(__name__)
 @app.route("/")
 def hello():
     return "Hello World!"
+# def index():
+#     response = flask.Response()
+#     response.headers["Access-Control-Allow-Origin"] = "*"
+#     return response
 
 @app.route('/query/<D>/<A>/<date>')
 def query(D, A, date):
