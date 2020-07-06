@@ -35,7 +35,9 @@ class Map extends React.PureComponent {
       this.props.positions[0] === undefined
     ) {
       return (
-        <Alert variant="filled" severity="error" className="m-2">
+        <Alert variant="filled" severity="error"
+          className="p-3 m-2"
+          style={{ borderRadius: '10pt' }}>
           抱歉！加载Google地图失败！
         </Alert>
       );
@@ -53,6 +55,7 @@ class Map extends React.PureComponent {
         lng = 0;
 
       if (
+        this.props.positions ||
         this.props.positions.length === 0 ||
         this.props.positions[0] === undefined
       ) {

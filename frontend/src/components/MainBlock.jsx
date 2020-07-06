@@ -72,14 +72,18 @@ class MainBlock extends Component {
   };
 
   handleDayChange(date) {
-    if (date["_d"].toJSON()) {
-      let input = { ...this.state.input };
-      input.date = date["_d"].toJSON().slice(0, 10);
-      this.setState({
-        input,
-        error: false,
-        output: [],
-      });
+    if (date) {
+      if (date["_d"].toJSON()) {
+        let input = { ...this.state.input };
+        input.date = date["_d"].toJSON().slice(0, 10);
+        this.setState({
+          input,
+          error: false,
+          output: [],
+        });
+      }
+    } else {
+      this.setState({ incomplete: true })
     }
   }
 
