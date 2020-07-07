@@ -7,7 +7,7 @@ import {
   Polyline,
 } from "@react-google-maps/api";
 
-const myAPI = "AIzaSyBxc4-PLWx3dpX6OHaFY-2iZKl7QalbyhQ";
+const myAPI = "AIzaSyCfbJoBCCIg8LT1f04FeiZsVlMnEwUDwvM";
 const API = myAPI;
 
 class Map extends React.PureComponent {
