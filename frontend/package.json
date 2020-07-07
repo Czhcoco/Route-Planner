@@ -40,10 +40,13 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "prebuild":"rm -rf ../server/templates/index.html && rm -rf ../server/static/build",
     "build": "react-scripts build",
+    "postbuild": "mv build/index.html ../server/templates/ &&  mv build ../server/static/", 
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
+  "homepage": "../static/build",
   "eslintConfig": {
     "extends": "react-app"
   },
