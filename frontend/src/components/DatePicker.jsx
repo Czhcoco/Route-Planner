@@ -5,7 +5,7 @@ import { MuiPickersUtilsProvider, DatePicker } from "@material-ui/pickers";
 
 const MaterialUIPickers = (props) => {
   const [selectedDate, setSelectedDate] = React.useState(
-    new Date("2020-10-25")
+    new Date("2020-10-05")
   );
 
   const handleDateChange = (date) => {
