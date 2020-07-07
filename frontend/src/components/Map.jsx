@@ -90,8 +90,8 @@ class Map extends React.PureComponent {
       <LoadScript googleMapsApiKey={API} language="cn" region="cn">
         <GoogleMap
           mapContainerStyle={containerStyle}
-          center={getInitialCenter()}
-          zoom={10}
+          defaultCenter={getInitialCenter()}
+          defaultZoom={10}
           onLoad={(map) => map && onLoad(map)}
         >
           {this.props.positions.map(
