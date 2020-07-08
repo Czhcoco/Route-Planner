@@ -1,10 +1,11 @@
+# -*- coding: UTF-8 -*-
 from flask import Flask, render_template
 from api import api
 app = Flask(__name__)
 
 @app.route("/")
 def index():
-    return render_template('index.html')  # 渲染打包好的React App的页面
+    return render_template('index.html')
 
 
 @app.route('/query/<D>/<A>/<date>')

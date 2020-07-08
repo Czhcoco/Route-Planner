@@ -4,7 +4,7 @@ import Map from "./Map";
 import Route from "./Route";
 import Alert from "@material-ui/lab/Alert";
 
-const API = "AIzaSyBxc4-PLWx3dpX6OHaFY-2iZKl7QalbyhQ";
+const API = "AIzaSyCfbJoBCCIg8LT1f04FeiZsVlMnEwUDwvM";
 // set Google Maps Geocoding API for purposes of quota management. Its optional but recommended.
 Geocode.setApiKey(API);
 
