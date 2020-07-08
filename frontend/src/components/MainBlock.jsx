@@ -20,7 +20,7 @@ class MainBlock extends Component {
       input: {
         departure: "",
         arrival: "",
-        date: "2020-10-25",
+        date: "2020-10-05",
         trans: "",
       },
       output: [],
@@ -83,7 +83,7 @@ class MainBlock extends Component {
         });
       }
     } else {
-      this.setState({ incomplete: true })
+      this.setState({ incomplete: true });
     }
   }
 
