@@ -150,7 +150,8 @@ cython_debug/
 /coverage
 
 # production
-/build
+**/build
+**/templates
 
 # misc
 .DS_Store
