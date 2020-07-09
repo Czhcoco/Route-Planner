@@ -8,6 +8,7 @@ import Selector from "./Selector";
 import Button from "@material-ui/core/Button";
 import Alert from "@material-ui/lab/Alert";
 import ComboBox from "./ComboBox";
+import GitHubIcon from "@material-ui/icons/GitHub";
 
 class MainBlock extends Component {
   constructor(props) {
@@ -234,6 +235,17 @@ class MainBlock extends Component {
           transform: "translate(-50%, -50%)",
         }}
       >
+        <div className="row align-self-end m-2">
+          <Button
+            variant="text"
+            color="primary"
+            href="https://github.com/Czhcoco/Route-Planner"
+            startIcon={<GitHubIcon />}
+          >
+            Source Code
+          </Button>
+        </div>
+
         <header
           className="jumbotron jumbotron-fluid row align-items-center justify-content-center"
           style={{
