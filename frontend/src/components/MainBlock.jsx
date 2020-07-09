@@ -250,7 +250,6 @@ class MainBlock extends Component {
           className="jumbotron jumbotron-fluid row align-items-center justify-content-center"
           style={{
             backgroundColor: "rgb(255, 255, 255, 0)",
-            paddingTop: "80px",
           }}
         >
           <h1 style={{ textAlign: "center", color: "#73605C" }}>

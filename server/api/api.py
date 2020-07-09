@@ -240,5 +240,3 @@ def query(departure, arrival, date):
     routes, times = get_transfer(flight_data)
 
     return {"result:": calculate_risk(routes, times, transfer_factor)}
-
-print(query("多伦多", "香港", "2020-10-05"))
